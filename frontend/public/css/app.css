@@ -1,0 +1,62 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  font-family: "Lato", sans-serif;
+  min-height: 100vh;
+}
+
+.barra {
+  background-color: #455a64;
+  padding: 1rem;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.barra h1 {
+  color: white;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.barra a {
+  color: white;
+  text-decoration: none;
+}
+
+.contenedor {
+  display: flex;
+}
+
+.contenedor-menu {
+  height: 100vh;
+  width: 200px;
+  background-color: #607d8b;
+}
+
+.contenedor-menu ul {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.contenedor-menu ul li {
+  line-height: 40px;
+  margin-left: -15px;
+}
+
+.contenedor-menu ul li a {
+  color: white;
+  font-weight: 900;
+}
+
+.contenedor-table {
+  width: 100%;
+  padding: 1rem;
+}

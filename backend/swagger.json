@@ -1,0 +1,1052 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Delilah_resto",
+    "description": "Food Restaurant API",
+    "contact": { "email": "jta1223@gmail.com" },
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Operations on the user"
+    },
+    {
+      "name": "Product",
+      "description": "Operations on the product"
+    },
+    {
+      "name": "Order",
+      "description": "Operations on the order"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/user": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["User"],
+        "summary": "List Users",
+        "operationId": "listUsers",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/listUser"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new user",
+        "description": "Create a user in our app",
+        "operationId": "addtUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Create a new user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/postUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created",
+            "schema": {
+              "$ref": "#/definitions/listUser"
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["User"],
+        "summary": "List User",
+        "operationId": "listUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "User Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/listUser"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["User"],
+        "summary": "Updated User",
+        "operationId": "udpatedUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "User Id",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updatedUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/listUser"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["User"],
+        "summary": "Deleted User",
+        "operationId": "deletedUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "User Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Login User",
+        "description": "Login user in our app",
+        "operationId": "loginUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Loging user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loginUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login user",
+            "schema": {
+              "$ref": "#/definitions/loginToken"
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/{id}/enable": {
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["User"],
+        "summary": "Enable User",
+        "operationId": "enableUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "User Id",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Enable user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/enableUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/listUser"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/{id}/admin": {
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["User"],
+        "summary": "Admin User",
+        "operationId": "adminUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "User Id",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Admin user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/adminUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/listUser"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/product": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Product"],
+        "summary": "Created new product",
+        "description": "Created new product in our app",
+        "operationId": "addProduct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created new product",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addProduct"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listProduct"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Product"],
+        "summary": "List products",
+        "description": "List products in our app",
+        "operationId": "listProducts",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listProduct"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Product"],
+        "summary": "List product",
+        "description": "List product in our app",
+        "operationId": "listProduct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "List product",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listProduct"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Product"],
+        "summary": "Updated product",
+        "description": "Updated product in our app",
+        "operationId": "updatedProduct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Updated product",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated product",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addProduct"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listProduct"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Product"],
+        "summary": "Deleted product",
+        "description": "Deleted product in our app",
+        "operationId": "deletedProduct",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Deleted product",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/order": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Order"],
+        "summary": "Created new order",
+        "description": "Created new order in our app",
+        "operationId": "addOrder",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created new order, pay_id: 1: EFECTIVO, 2: T DEBITO, 3: T CREDITO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addOrder"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listOrder"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Order"],
+        "summary": "List orders",
+        "description": "List orders in our app",
+        "operationId": "listOrders",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listOrder"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/order/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Order"],
+        "summary": "List order",
+        "description": "List order in our app",
+        "operationId": "listOrder",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listOrder"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Order"],
+        "summary": "Deleted order",
+        "description": "Deleted order in our app",
+        "operationId": "deletedOrder",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/order/{id}/status": {
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Order"],
+        "summary": "Updated status order",
+        "description": "Updated status order in our app",
+        "operationId": "updatedOrders",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Id",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Status 1: NUEVO, 2: CONFIRMADO, 3: PREPARANDO, 4: ENVIANDO, 5: ENTREGADO, 6: CANCELADO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updatedOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listOrder"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "description": "Enter your bearer token in the format JWT"
+    }
+  },
+  "definitions": {
+    "postUser": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "jta1223"
+        },
+        "password": {
+          "type": "string",
+          "example": "admin123"
+        },
+        "fullname": {
+          "type": "string",
+          "example": "Jonathan Jimenez S"
+        },
+        "email": {
+          "type": "string",
+          "example": "admin@admin.com"
+        },
+        "phone": {
+          "type": "string",
+          "example": "1234567890"
+        },
+        "address": {
+          "type": "string",
+          "example": "Cl 10 50 90"
+        }
+      }
+    },
+    "listUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "username": {
+          "type": "string",
+          "example": "Jonathan Jimenez S"
+        },
+        "fullname": {
+          "type": "string",
+          "example": "jta1223"
+        },
+        "email": {
+          "type": "string",
+          "example": "admin@admin.com"
+        },
+        "phone": {
+          "type": "string",
+          "example": "1234567890"
+        },
+        "address": {
+          "type": "string",
+          "example": "Cl 10 50 90"
+        },
+        "admin": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "enable": {
+          "format": "int32",
+          "type": "integer",
+          "example": 1
+        },
+        "createAt": {
+          "type": "string",
+          "example": "2020-12-05T02:08:39.000Z"
+        }
+      }
+    },
+    "loginUser": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "jta1223 y/o jta1223@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "admin123"
+        }
+      }
+    },
+    "loginToken": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVsbG5hbWUiOiJKb25hdGhhbiBKaW1lbmV6IFMiLCJlbWFpbCI6Imp0YTEyMjNAZ21haWwuY29tIiwicGhvbmUiOiIzMTY4ODUwNDk3IiwiYWRkcmVzcyI6IkNsbCA4MCBTIDYwIDU0IiwiaXNBZG1pbiI6MSwiYWN0aXZlIjoxLCJpYXQiOjE2MDcxMzQyOTl9.4tJARNhqGCiMZ6iGh_lob2r39WKyCv0cnKQGjnA_r5c"
+        }
+      }
+    },
+    "enableUser": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
+      }
+    },
+    "adminUser": {
+      "type": "object",
+      "properties": {
+        "admin": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
+      }
+    },
+    "updatedUser": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "Jonathan Jimenez S"
+        },
+        "fullname": {
+          "type": "string",
+          "example": "jta1223"
+        },
+        "email": {
+          "type": "string",
+          "example": "admin@admin.com"
+        },
+        "phone": {
+          "type": "string",
+          "example": "1234567890"
+        },
+        "address": {
+          "type": "string",
+          "example": "Cl 10 50 90"
+        }
+      }
+    },
+    "addProduct": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Sandwich de Focaccia"
+        },
+        "img": {
+          "type": "string",
+          "example": "https://www.petitchef.es/imgupl/recipe/focaccia-sandwich--md-166713p249402.jpg"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32",
+          "example": 100
+        }
+      }
+    },
+    "listProduct": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "Bagel de salmón"
+        },
+        "img": {
+          "type": "string",
+          "example": "https://www.petitchef.es/imgupl/recipe/focaccia-sandwich--md-166713p249402.jpg"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32",
+          "example": 100
+        },
+        "enable": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2020-12-04T19:37:58.000Z"
+        }
+      }
+    },
+    "addOrder": {
+      "type": "object",
+      "properties": {
+        "product": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "quantity": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              }
+            }
+          }
+        },
+        "pay_id": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
+      }
+    },
+    "listOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "created": {
+          "type": "string",
+          "example": "2020-12-05T21:19:38.000Z"
+        },
+        "User": {
+          "type": "object",
+          "properties": {
+            "fullname": {
+              "type": "string",
+              "example": "Jonathan Jimenez S"
+            },
+            "username": {
+              "type": "string",
+              "example": "jta1223"
+            },
+            "email": {
+              "type": "string",
+              "example": "jta1223@gmail.com"
+            },
+            "phone": {
+              "type": "string",
+              "example": "1234567890"
+            },
+            "address": {
+              "type": "string",
+              "example": "Cl 10 50 90"
+            }
+          }
+        },
+        "Status": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "NUEVO"
+            }
+          }
+        },
+        "Payment": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "EFECTIVO"
+            }
+          }
+        },
+        "Order_Products": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "quantity": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "price": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "Product": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Sandwich de Focaccia"
+                  },
+                  "img": {
+                    "type": "string",
+                    "example": "https://www.petitchef.es/imgupl/recipe/focaccia-sandwich--md-166713p249402.jpg"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "updatedOrder": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
