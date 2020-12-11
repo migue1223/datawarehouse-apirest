@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js",
-    "database": "node store/created_db.js && node store/updated_db.js && nodemon app.js"
+    "database": "node store/created_db.js && node store/updated_db.js"
   },
   "keywords": [],
   "author": "",

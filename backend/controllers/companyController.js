@@ -6,22 +6,34 @@ const response = require("../network/response");
 
 exports.listCompany = async (req, res) => {
   try {
-    const companys = await db.company.findAll({
-      include: [
-        {
-          model: db.city,
-          attributes: ["id", "name"],
-          include: [
-            {
-              model: db.country,
-              attributes: ["id", "name"],
-              include: [{ model: db.region, attributes: ["id", "name"] }],
-            },
-          ],
+    let companys;
+    if (req.query.name) {
+      companys = await db.company.findOne({
+        where: {
+          name: req.query.name,
         },
-      ],
-      attributes: ["id", "name", "address"],
-    });
+      });
+    } else {
+      companys = await db.company.findAll({
+        include: [
+          {
+            model: db.city,
+            attributes: ["id", "name"],
+            include: [
+              {
+                model: db.country,
+                attributes: ["id", "name"],
+                include: [{ model: db.region, attributes: ["id", "name"] }],
+              },
+            ],
+          },
+        ],
+        attributes: ["id", "name", "email", "address"],
+      });
+    }
+    if (!companys) {
+      return response.error(req, res, "Not found", 404);
+    }
     response.success(req, res, companys, 200);
   } catch (err) {
     console.error(chalk.red("ctr-company-list"), err);
@@ -48,7 +60,7 @@ exports.getCompany = async (req, res) => {
           ],
         },
       ],
-      attributes: ["id", "name", "address"],
+      attributes: ["id", "name", "email", "address"],
     });
     if (!company) {
       return response.success(req, res, "Not found", 404);
@@ -61,14 +73,16 @@ exports.getCompany = async (req, res) => {
 };
 
 exports.insertCompany = async (req, res) => {
+  console.log(req.body);
   try {
-    const { name, address, cityId } = req.body;
+    const { name, email, address, cityId } = req.body;
 
     const city = await db.city.findOne({
       where: {
-        id: cityId,
+        id: +cityId,
       },
     });
+    console.log(city);
 
     if (!city) {
       return response.error(req, res, "Not city found", 404);
@@ -76,6 +90,7 @@ exports.insertCompany = async (req, res) => {
 
     const create = await db.company.create({
       name,
+      email,
       address,
       CityId: cityId,
     });
@@ -97,7 +112,7 @@ exports.insertCompany = async (req, res) => {
             ],
           },
         ],
-        attributes: ["id", "name", "address"],
+        attributes: ["id", "name", "email", "address"],
       });
       response.success(req, res, company, 201);
     }
@@ -109,7 +124,7 @@ exports.insertCompany = async (req, res) => {
 
 exports.updatedCompany = async (req, res) => {
   try {
-    const { name, address, cityId } = req.body;
+    const { name, email, address, cityId } = req.body;
 
     const company = await db.company.findOne({
       where: {
@@ -132,6 +147,7 @@ exports.updatedCompany = async (req, res) => {
     await db.company.update(
       {
         name,
+        email,
         address,
         CityId: cityId,
       },
@@ -158,7 +174,7 @@ exports.updatedCompany = async (req, res) => {
           ],
         },
       ],
-      attributes: ["id", "name", "address"],
+      attributes: ["id", "name", "email", "address"],
     });
     response.success(req, res, companyUpdated, 200);
   } catch (err) {

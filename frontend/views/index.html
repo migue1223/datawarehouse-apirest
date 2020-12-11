@@ -25,17 +25,17 @@
     <main class="contenedor">
       <aside class="contenedor-menu">
         <ul id="ul-menu" class="ul-menu">
-          <li class="menuCompany"><a href="#">Compañías</a></li>
-          <li class="menuContact"><a href="#">Contactos</a></li>
-          <li class="menuCity"><a href="#">Región / Ciudad</a></li>
-          <li class="menuUser"><a href="#">Usuarios</a></li>
+          <li class="menuCompany"><a href="#companias">Compañías</a></li>
+          <li class="menuContact"><a href="#contactos">Contactos</a></li>
+          <li class="menuCity"><a href="#region-ciudad">Región / Ciudad</a></li>
+          <li class="menuUser"><a href="#usuarios">Usuarios</a></li>
         </ul>
       </aside>
       <div class="contenedor-table"></div>
     </main>
     <!--Modal para Usuarios-->
     <div
-      id="modalUsuarios"
+      id="modalUser"
       class="modal fade"
       tabindex="-1"
       role="dialog"
@@ -44,32 +44,32 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
+          <div class="modal-header modal-header-user">
+            <h5 class="modal-title modal-title-user"></h5>
           </div>
-          <form id="formUsuarios">
+          <form id="formUser">
             <div class="modal-body">
-              <input id="idUser" hidden />
+              <input id="userId" hidden />
               <label for="" class="col-form-label">Name:</label>
-              <input type="text" class="form-control" id="nameUser" required />
+              <input type="text" class="form-control" id="userName" required />
               <label for="" class="col-form-label">Lastname:</label>
               <input
                 type="text"
                 class="form-control"
-                id="lastnameUser"
+                id="userLastName"
                 required
               />
               <label for="" class="col-form-label">Email:</label>
               <input
                 type="email"
                 class="form-control"
-                id="emailUser"
+                id="userEmail"
                 required
               />
               <label for="" class="col-form-label">Password:</label>
-              <input type="password" class="form-control" id="passwordUser" />
+              <input type="password" class="form-control" id="userPassword" />
               <label for="" class="col-form-label">Rol:</label>
-              <select class="form-control" id="rolUser">
+              <select class="form-control" id="userRol">
                 <option value="">Seleccionar rol</option>
                 <option value="Administrador">Administrador</option>
                 <option value="Empleado">Empleado</option>
@@ -83,7 +83,7 @@
               >
                 Cancelar
               </button>
-              <button type="submit" id="btnGuardar" class="btn btn-dark">
+              <button type="submit" id="btnGuardarUser" class="btn btn-dark">
                 Guardar
               </button>
             </div>
@@ -91,9 +91,10 @@
         </div>
       </div>
     </div>
+
     <!--Modal para Compañias-->
     <div
-      id="modalCompanias"
+      id="modalCompany"
       class="modal fade"
       tabindex="-1"
       role="dialog"
@@ -102,31 +103,33 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
+          <div class="modal-header modal-header-company">
+            <h5 class="modal-title modal-title-company"></h5>
           </div>
-          <form id="formUsuarios">
+          <form id="formCompany">
             <div class="modal-body">
-              <input id="idCompany" hidden />
+              <input id="companyId" hidden />
               <label for="" class="col-form-label">Name:</label>
               <input
                 type="text"
                 class="form-control"
-                id="nameCompany"
+                id="companyName"
                 required
               />
-              <label for="" class="col-form-label">Country:</label>
-              <select class="form-control" id="countryCompany">
-                <option value="">Seleccionar country</option>
-                <option value="Argentina">Argentina</option>
-                <option value="Colombia">Colombia</option>
-                <option value="Mexico">Mexico</option>
-              </select>
-              <label for="" class="col-form-label">Address:</label>
+              <label for="" class="col-form-label">Email:</label>
               <input
                 type="email"
                 class="form-control"
-                id="addressCompany"
+                id="companyEmail"
+                required
+              />
+              <label for="" class="col-form-label">City:</label>
+              <select class="form-control" id="companyCity"></select>
+              <label for="" class="col-form-label">Address:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="companyAddress"
                 required
               />
             </div>
@@ -138,7 +141,7 @@
               >
                 Cancelar
               </button>
-              <button type="submit" id="btnGuardar" class="btn btn-dark">
+              <button type="submit" id="btnGuardarCompany" class="btn btn-dark">
                 Guardar
               </button>
             </div>
@@ -146,6 +149,95 @@
         </div>
       </div>
     </div>
+
+    <!--Modal para Compañias-->
+    <div
+      id="modalContact"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header modal-header-contact">
+            <h5 class="modal-title modal-title-contact"></h5>
+          </div>
+          <form id="formContact">
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input id="contactId" hidden />
+                    <label for="" class="col-form-label">Name:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="contactName"
+                      required
+                    />
+                    <label for="" class="col-form-label">LastName:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="contactLastName"
+                      required
+                    />
+                    <label for="" class="col-form-label">Position:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="contactPosition"
+                      required
+                    />
+                    <label for="" class="col-form-label">Email:</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="contactEmail"
+                      required
+                    />
+                    <label for="" class="col-form-label">Company:</label>
+                    <select class="form-control" id="contactCompany"></select>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="" class="col-form-label">Region:</label>
+                    <select class="form-control" id="contactRegion"></select>
+                    <label for="" class="col-form-label">Country:</label>
+                    <select class="form-control" id="contactCountry"></select>
+                    <label for="" class="col-form-label">City:</label>
+                    <select class="form-control" id="contactCity"></select>
+                    <label for="" class="col-form-label">Address:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="contactAddress"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button type="submit" id="btnGuardarContact" class="btn btn-dark">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <script src="../public/dist/bundle.js"></script>
   </body>
 </html>

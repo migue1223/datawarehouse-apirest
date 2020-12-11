@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const db = require("./db");
 const mysql = require("mysql");
 const config = require("../config/");
-const fetch = require("node-fetch");
 
 const dbconf = {
   host: config.mysql.host,
@@ -68,6 +67,36 @@ const regions = [
   },
 ];
 
+const country = [
+  {
+    country_name: "Colombia",
+    region_id: 1,
+  },
+];
+
+const city = [
+  {
+    city_name: "Medellín",
+    country_id: 1,
+  },
+  {
+    city_name: "Bogotá",
+    country_id: 1,
+  },
+  {
+    city_name: "Cali",
+    country_id: 1,
+  },
+  {
+    city_name: "Barranquilla",
+    country_id: 1,
+  },
+  {
+    city_name: "Cartagena",
+    country_id: 1,
+  },
+];
+
 async function insert(table, data) {
   return new Promise((resolve, reject) => {
     connection.query(`INSERT INTO ${table} SET ?`, data, (err, result) => {
@@ -84,7 +113,7 @@ async function updatedDb(table, data) {
 async function createUser() {
   const user = {
     user_name: "Admin",
-    user_lastname: "admin",
+    user_lastname: "Admin",
     user_email: "admin@admin.com",
     user_rol: "Administrador",
     user_admin: 1,
@@ -101,10 +130,12 @@ db.sequelize
   .sync()
   .then(async () => {
     console.log("Conectado al Servidor");
+    await createUser();
     await updatedDb("channels", channels);
     await updatedDb("preferences", preferences);
     await updatedDb("regions", regions);
-    await createUser();
+    await updatedDb("countries", country);
+    await updatedDb("cities", city);
     await connection.end();
     await db.sequelize.close();
     console.log("Desconectado del servidor");

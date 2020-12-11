@@ -26,6 +26,19 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Company already registered",
         },
       },
+      email: {
+        field: "comp_email",
+        type: DataTypes.STRING(60),
+        validate: {
+          notEmpty: {
+            msg: "Name cannot be empty",
+          },
+        },
+        unique: {
+          args: true,
+          msg: "Email already registered",
+        },
+      },
       address: {
         field: "comp_address",
         type: DataTypes.STRING(60),
