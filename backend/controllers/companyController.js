@@ -4,6 +4,22 @@ const chalk = require("chalk");
 const db = require("../store/db");
 const response = require("../network/response");
 
+const joinInclude = [
+  {
+    model: db.city,
+    attributes: ["id", "name"],
+    include: [
+      {
+        model: db.country,
+        attributes: ["id", "name"],
+        include: [{ model: db.region, attributes: ["id", "name"] }],
+      },
+    ],
+  },
+];
+
+const joinAttributes = ["id", "name", "email", "address"];
+
 exports.listCompany = async (req, res) => {
   try {
     let companys;
@@ -15,20 +31,8 @@ exports.listCompany = async (req, res) => {
       });
     } else {
       companys = await db.company.findAll({
-        include: [
-          {
-            model: db.city,
-            attributes: ["id", "name"],
-            include: [
-              {
-                model: db.country,
-                attributes: ["id", "name"],
-                include: [{ model: db.region, attributes: ["id", "name"] }],
-              },
-            ],
-          },
-        ],
-        attributes: ["id", "name", "email", "address"],
+        include: joinInclude,
+        attributes: joinAttributes,
       });
     }
     if (!companys) {
@@ -47,20 +51,8 @@ exports.getCompany = async (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [
-        {
-          model: db.city,
-          attributes: ["id", "name"],
-          include: [
-            {
-              model: db.country,
-              attributes: ["id", "name"],
-              include: [{ model: db.region, attributes: ["id", "name"] }],
-            },
-          ],
-        },
-      ],
-      attributes: ["id", "name", "email", "address"],
+      include: joinInclude,
+      attributes: joinAttributes,
     });
     if (!company) {
       return response.success(req, res, "Not found", 404);
@@ -73,20 +65,8 @@ exports.getCompany = async (req, res) => {
 };
 
 exports.insertCompany = async (req, res) => {
-  console.log(req.body);
   try {
     const { name, email, address, cityId } = req.body;
-
-    const city = await db.city.findOne({
-      where: {
-        id: +cityId,
-      },
-    });
-    console.log(city);
-
-    if (!city) {
-      return response.error(req, res, "Not city found", 404);
-    }
 
     const create = await db.company.create({
       name,
@@ -99,20 +79,8 @@ exports.insertCompany = async (req, res) => {
         where: {
           id: create.dataValues.id,
         },
-        include: [
-          {
-            model: db.city,
-            attributes: ["id", "name"],
-            include: [
-              {
-                model: db.country,
-                attributes: ["id", "name"],
-                include: [{ model: db.region, attributes: ["id", "name"] }],
-              },
-            ],
-          },
-        ],
-        attributes: ["id", "name", "email", "address"],
+        include: joinInclude,
+        attributes: joinAttributes,
       });
       response.success(req, res, company, 201);
     }
@@ -135,15 +103,6 @@ exports.updatedCompany = async (req, res) => {
       return response.error(req, res, "Not found", 404);
     }
 
-    const city = await db.city.findOne({
-      where: {
-        id: cityId,
-      },
-    });
-    if (!city) {
-      return response.error(req, res, "Not city found", 404);
-    }
-
     await db.company.update(
       {
         name,
@@ -161,20 +120,8 @@ exports.updatedCompany = async (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [
-        {
-          model: db.city,
-          attributes: ["id", "name"],
-          include: [
-            {
-              model: db.country,
-              attributes: ["id", "name"],
-              include: [{ model: db.region, attributes: ["id", "name"] }],
-            },
-          ],
-        },
-      ],
-      attributes: ["id", "name", "email", "address"],
+      include: joinInclude,
+      attributes: joinAttributes,
     });
     response.success(req, res, companyUpdated, 200);
   } catch (err) {

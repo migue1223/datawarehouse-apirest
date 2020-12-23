@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         field: "contact_interests",
         type: DataTypes.STRING(10),
       },
-      user: {
+      useraccount: {
         field: "contact_user",
         type: DataTypes.STRING(60),
       },

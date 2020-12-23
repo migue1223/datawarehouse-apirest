@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
-import "core-js/stable";
-import "regenerator-runtime/runtime";
-import Swal from "sweetalert2";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import Swal from 'sweetalert2';
 
 let opcionCompany = null;
 let idCompany,
@@ -11,31 +11,47 @@ let idCompany,
   cityCompany,
   addressCompany,
   filaCompany;
-const API_COMPANY = localStorage.getItem("API");
-const TOKEN_COMPANY = localStorage.getItem("token");
+const API_COMPANY = localStorage.getItem('API');
+const TOKEN_COMPANY = localStorage.getItem('token');
 
-const formCompany = document.getElementById("formCompany");
-const modalCompany = document.getElementById("modalCompany");
-const modalHeaderCompay = document.querySelector(".modal-header-company");
-const modalTitleCompany = document.querySelector(".modal-title-company");
-const inputIdCompany = document.getElementById("companyId");
-const inputNameCompany = document.getElementById("companyName");
-const selectCityCompany = document.getElementById("companyCity");
-const inputEmailCompany = document.getElementById("companyEmail");
-const inputAddressCompany = document.getElementById("companyAddress");
-const menuCompany = document.querySelector(".menuCompany");
+const formCompany = document.getElementById('formCompany');
+const modalCompany = document.getElementById('modalCompany');
+const modalHeaderCompay = document.querySelector('.modal-header-company');
+const modalTitleCompany = document.querySelector('.modal-title-company');
+const inputIdCompany = document.getElementById('companyId');
+const inputNameCompany = document.getElementById('companyName');
+const selectCityCompany = document.getElementById('companyCity');
+const inputEmailCompany = document.getElementById('companyEmail');
+const inputAddressCompany = document.getElementById('companyAddress');
+const menuCompany = document.querySelector('.menuCompany');
+const contenedorTableCompany = document.querySelector('.contenedor-table');
+
+if (contenedorTableCompany) {
+  contenedorTableCompany.addEventListener('click', (e) => {
+    const tagName = e.target;
+    if (tagName.classList.contains('btnCrearCompany')) {
+      createdCompanyId();
+    }
+    if (tagName.classList.contains('btnEditarCompany')) {
+      editCompanyId(e);
+    }
+    if (tagName.classList.contains('btnBorrarCompany')) {
+      deletedCompanyId(e);
+    }
+  });
+}
 
 if (menuCompany) {
-  menuCompany.addEventListener("click", async () => {
+  menuCompany.addEventListener('click', async () => {
     await renderTableCompany();
   });
 }
 
 async function renderDataCompany() {
   const getCompanys = await fetch(`${API_COMPANY}/company`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      Authorization: "Bearer " + TOKEN_COMPANY,
+      Authorization: 'Bearer ' + TOKEN_COMPANY,
     },
   });
   const companys = await getCompanys.json();
@@ -44,10 +60,10 @@ async function renderDataCompany() {
 
 async function createdCompany(company) {
   const createCompany = await fetch(`${API_COMPANY}/company`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Authorization: "Bearer " + TOKEN_COMPANY,
-      "Content-Type": "application/json",
+      Authorization: 'Bearer ' + TOKEN_COMPANY,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       name: company.name,
@@ -63,7 +79,7 @@ async function createdCompany(company) {
 async function getCompanyName(name) {
   const getCompany = await fetch(`${API_COMPANY}/company?name=${name}`, {
     headers: {
-      Authorization: "Bearer " + TOKEN_COMPANY,
+      Authorization: 'Bearer ' + TOKEN_COMPANY,
     },
   });
   const company = await getCompany.json();
@@ -72,9 +88,9 @@ async function getCompanyName(name) {
 
 async function getCitys() {
   const getCity = await fetch(`${API_COMPANY}/city`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      Authorization: "Bearer " + TOKEN_COMPANY,
+      Authorization: 'Bearer ' + TOKEN_COMPANY,
     },
   });
   const result = await getCity.json();
@@ -83,10 +99,10 @@ async function getCitys() {
 
 async function updatedCompany(company) {
   const updateCompany = await fetch(`${API_COMPANY}/company/${company.id}`, {
-    method: "PUT",
+    method: 'PUT',
     headers: {
-      Authorization: "Bearer " + TOKEN_COMPANY,
-      "Content-Type": "application/json",
+      Authorization: 'Bearer ' + TOKEN_COMPANY,
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       name: company.name,
@@ -101,9 +117,9 @@ async function updatedCompany(company) {
 
 async function deletedCompany(id) {
   const deleteCompany = await fetch(`${API_COMPANY}/company/${id}`, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      Authorization: "Bearer " + TOKEN_COMPANY,
+      Authorization: 'Bearer ' + TOKEN_COMPANY,
     },
   });
   const result = await deleteCompany.json();
@@ -112,19 +128,19 @@ async function deletedCompany(id) {
 
 async function renderOptionCitys(id) {
   const city = await getCitys();
-  const delOption = selectCityCompany.querySelectorAll("option");
+  const delOption = selectCityCompany.querySelectorAll('option');
 
   if (delOption.length > 0) {
     delOption.forEach((op) => op.parentElement.removeChild(op));
   }
 
-  const optionCity = document.createElement("option");
-  const textOptionCity = document.createTextNode("Seleccionar city");
+  const optionCity = document.createElement('option');
+  const textOptionCity = document.createTextNode('Seleccionar ciudad');
   optionCity.appendChild(textOptionCity);
   selectCityCompany.appendChild(optionCity);
 
   city.forEach((ci) => {
-    const option = document.createElement("option");
+    const option = document.createElement('option');
     const textOption = document.createTextNode(ci.name);
     option.value = ci.id;
     option.appendChild(textOption);
@@ -138,10 +154,10 @@ async function renderOptionCitys(id) {
 }
 
 async function renderTableCompany() {
-  $(".contenedor-table").empty();
-  $(".contenedor-table").append(`
+  $('.contenedor-table').empty();
+  $('.contenedor-table').append(`
     <div class="container-fluid">
-      <button id="btnCrearCompany" class="btn btn-dark mt-2">Crear Company</button>
+      <button id="btnCrearCompany" class="btn btn-dark mt-2 btnCrearCompany">Crear Compañía</button>
       <br>
       <br>
       <div class="row">
@@ -150,11 +166,11 @@ async function renderTableCompany() {
             <thead>
               <tr>
                 <th><input type="checkbox"></th>
-                <th>Name</th>
+                <th>Nombre</th>
                 <th>Email</th>
-                <th>City</th>
-                <th>Address</th>
-                <th>Actions</th>
+                <th>Ciudad</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -164,16 +180,16 @@ async function renderTableCompany() {
     </div>
   `);
   const companys = await renderDataCompany();
-  $("#tableCompany").DataTable({
+  $('#tableCompany').DataTable({
     data: companys,
     columns: [
       {
         data: null,
       },
-      { data: "name" },
-      { data: "email" },
+      { data: 'name' },
+      { data: 'email' },
       { data: null },
-      { data: "address" },
+      { data: 'address' },
       {
         defaultContent:
           "<div class='text-center'><div class='btn-group'><button class='btn btn-info btn-sm btnEditarCompany'>Editar</button><button class='btn btn-danger btn-sm btnBorrarCompany'>Borrar</button></div></div>",
@@ -182,21 +198,21 @@ async function renderTableCompany() {
     columnDefs: [
       {
         targets: 0,
-        data: "id",
+        data: 'id',
         render: function (data) {
           return '<input type="checkbox" data-idcompany="' + data.id + '"/>';
         },
       },
       {
         targets: 3,
-        data: "City",
+        data: 'City',
         render: function (data) {
           return (
             '<span type="checkbox" data-idcity="' +
             data.City.id +
             '">' +
             data.City.name +
-            "</span>"
+            '</span>'
           );
         },
       },
@@ -205,30 +221,30 @@ async function renderTableCompany() {
 }
 
 //CREAR
-$(document).on("click", "#btnCrearCompany", async function () {
-  opcionCompany = "crear";
+async function createdCompanyId() {
+  opcionCompany = 'crear';
   idCompany = null;
   formCompany.reset();
-  modalHeaderCompay.style.backgroundColor = "#23272b";
-  modalHeaderCompay.style.color = "#FFFFFF";
-  modalTitleCompany.innerHTML = "Crear Compañía";
-  $(modalCompany).modal("show");
+  modalHeaderCompay.style.backgroundColor = '#23272b';
+  modalHeaderCompay.style.color = '#FFFFFF';
+  modalTitleCompany.innerHTML = 'Crear Compañía';
+  $(modalCompany).modal('show');
   await renderOptionCitys();
-});
+}
 
 //EDITAR
-$(document).on("click", ".btnEditarCompany", function () {
-  opcionCompany = "editar";
-  filaCompany = this.closest("tr");
+function editCompanyId(e) {
+  opcionCompany = 'editar';
+  filaCompany = e.path[4];
   idCompany = +filaCompany
-    .getElementsByTagName("td")[0]
-    .querySelector("input")
+    .getElementsByTagName('td')[0]
+    .querySelector('input')
     .dataset.idcompany.trim();
-  nameCompany = filaCompany.getElementsByTagName("td")[1].innerHTML.trim();
-  emailCompany = filaCompany.getElementsByTagName("td")[2].innerHTML.trim();
-  cityCompany = +filaCompany.getElementsByTagName("td")[3].querySelector("span")
+  nameCompany = filaCompany.getElementsByTagName('td')[1].innerHTML.trim();
+  emailCompany = filaCompany.getElementsByTagName('td')[2].innerHTML.trim();
+  cityCompany = +filaCompany.getElementsByTagName('td')[3].querySelector('span')
     .dataset.idcity;
-  addressCompany = filaCompany.getElementsByTagName("td")[4].innerHTML.trim();
+  addressCompany = filaCompany.getElementsByTagName('td')[4].innerHTML.trim();
 
   inputIdCompany.value = idCompany;
   inputNameCompany.value = nameCompany;
@@ -236,40 +252,40 @@ $(document).on("click", ".btnEditarCompany", function () {
   inputEmailCompany.value = emailCompany;
   inputAddressCompany.value = addressCompany;
 
-  modalHeaderCompay.style.backgroundColor = "#7303c0";
-  modalHeaderCompay.style.color = "#FFFFFF";
-  modalTitleCompany.innerHTML = "Editar Company";
+  modalHeaderCompay.style.backgroundColor = '#17A2B8';
+  modalHeaderCompay.style.color = '#FFFFFF';
+  modalTitleCompany.innerHTML = 'Editar Compañía';
   renderOptionCitys(cityCompany);
-  $(modalCompany).modal("show");
-});
+  $(modalCompany).modal('show');
+}
 
 //BORRAR
-$(document).on("click", ".btnBorrarCompany", async function () {
-  filaCompany = this.closest("tr");
+async function deletedCompanyId(e) {
+  filaCompany = e.path[4];
   idCompany = +filaCompany
-    .getElementsByTagName("td")[0]
-    .querySelector("input")
+    .getElementsByTagName('td')[0]
+    .querySelector('input')
     .dataset.idcompany.trim();
   Swal.fire({
-    title: "¿Confirma eliminar el registro?",
+    title: '¿Confirma eliminar el registro?',
     showCancelButton: true,
     confirmButtonText: `Confirmar`,
   }).then(async (result) => {
     if (result.isConfirmed) {
       const deleteCompany = await deletedCompany(idCompany);
       if (deleteCompany.status === 200) {
-        Swal.fire("¡Registro Eliminado!", "", "success");
+        Swal.fire('¡Registro Eliminado!', '', 'success');
         await renderTableCompany();
       } else {
-        Swal.fire("!No se pudo eliminar el registro!", "", "error");
+        Swal.fire('!No se pudo eliminar el registro!', '', 'error');
         await renderTableCompany();
       }
     }
   });
-});
+}
 
 //submit para el CREAR y EDITAR
-formCompany.addEventListener("submit", async (e) => {
+formCompany.addEventListener('submit', async (e) => {
   e.preventDefault();
   const company = {
     id: +inputIdCompany.value.trim(),
@@ -278,45 +294,45 @@ formCompany.addEventListener("submit", async (e) => {
     email: inputEmailCompany.value.trim(),
     address: inputAddressCompany.value.trim(),
   };
-  if (opcionCompany === "crear") {
+  if (opcionCompany === 'crear') {
     const companyCreated = await createdCompany(company);
     if (companyCreated.status === 201) {
-      Swal.fire("!Registro creado!", "", "success");
+      Swal.fire('!Registro creado!', '', 'success');
       await renderTableCompany();
     } else {
-      Swal.fire("!Error", "", "error");
+      Swal.fire('!Error', '', 'error');
       await renderTableCompany();
     }
   }
-  if (opcionCompany === "editar") {
+  if (opcionCompany === 'editar') {
     const companyUpdated = await updatedCompany(company);
     if (companyUpdated.status === 200) {
-      Swal.fire("!Registro actualizado!", "", "success");
+      Swal.fire('!Registro actualizado!', '', 'success');
       await renderTableCompany();
     } else {
-      Swal.fire("!Error", "", "error");
+      Swal.fire('!Error', '', 'error');
       await renderTableCompany();
     }
   }
-  $(modalCompany).modal("hide");
+  $(modalCompany).modal('hide');
 });
 
 //validar si existe EMAIL
-inputNameCompany.addEventListener("blur", async () => {
+inputNameCompany.addEventListener('blur', async () => {
   nameCompany = inputNameCompany.value.trim();
-  if (nameCompany !== "") {
+  if (nameCompany !== '') {
     const validNameCompany = await getCompanyName(nameCompany);
-    const span = document.createElement("span");
-    const textSpan = document.createTextNode("Company ya existe");
+    const span = document.createElement('span');
+    const textSpan = document.createTextNode('Company ya existe');
     span.append(textSpan);
-    span.classList = "btn-danger";
-    const br = document.createElement("br");
+    span.classList = 'btn-danger';
+    const br = document.createElement('br');
     if (validNameCompany.status === 200) {
       inputNameCompany.after(span, br);
       setTimeout(() => {
         span.remove();
         br.remove();
-        inputNameCompany.value = "";
+        inputNameCompany.value = '';
       }, 3000);
     }
   }

@@ -72,6 +72,14 @@ const country = [
     country_name: "Colombia",
     region_id: 1,
   },
+  {
+    country_name: "Argentina",
+    region_id: 1,
+  },
+  {
+    country_name: "Perú",
+    region_id: 1,
+  },
 ];
 
 const city = [

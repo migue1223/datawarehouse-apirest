@@ -4,18 +4,33 @@ const chalk = require("chalk");
 const db = require("../store/db");
 const response = require("../network/response");
 
+const joinInclude = [
+  {
+    model: db.country,
+    attributes: ["id", "name"],
+    include: [{ model: db.region, attributes: ["id", "name"] }],
+  },
+];
+
+const joinAttributes = ["id", "name"];
+
 exports.listCity = async (req, res) => {
   try {
-    const citys = await db.city.findAll({
-      include: [
-        {
-          model: db.country,
-          attributes: ["id", "name"],
-          include: [{ model: db.region, attributes: ["id", "name"] }],
+    let citys;
+    if (req.query.countryId) {
+      citys = await db.city.findAll({
+        where: {
+          CountryId: +req.query.countryId,
         },
-      ],
-      attributes: ["id", "name"],
-    });
+        include: joinInclude,
+        attributes: joinAttributes,
+      });
+    } else {
+      citys = await db.city.findAll({
+        include: joinInclude,
+        attributes: joinAttributes,
+      });
+    }
     response.success(req, res, citys, 200);
   } catch (err) {
     console.error(chalk.red("ctr-city-list"), err);
@@ -29,14 +44,8 @@ exports.getCity = async (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [
-        {
-          model: db.country,
-          attributes: ["id", "name"],
-          include: [{ model: db.region, attributes: ["id", "name"] }],
-        },
-      ],
-      attributes: ["id", "name"],
+      include: joinInclude,
+      attributes: joinAttributes,
     });
 
     if (!city) {
@@ -53,15 +62,6 @@ exports.insertCity = async (req, res) => {
   try {
     const { name, countryId } = req.body;
 
-    const country = await db.country.findOne({
-      where: {
-        id: req.body.countryId,
-      },
-    });
-    if (!country) {
-      return response.error(req, res, "Not country found", 404);
-    }
-
     const create = await db.city.create({
       name,
       CountryId: countryId,
@@ -72,14 +72,8 @@ exports.insertCity = async (req, res) => {
         where: {
           id: create.dataValues.id,
         },
-        include: [
-          {
-            model: db.country,
-            attributes: ["id", "name"],
-            include: [{ model: db.region, attributes: ["id", "name"] }],
-          },
-        ],
-        attributes: ["id", "name"],
+        include: joinInclude,
+        attributes: joinAttributes,
       });
       response.success(req, res, city, 201);
     }
@@ -100,15 +94,6 @@ exports.updatedCity = async (req, res) => {
     if (!city) {
       return response.error(req, res, "Not found", 404);
     }
-    
-    const country = await db.country.findOne({
-      where: {
-        id: req.body.countryId,
-      },
-    });
-    if (!country) {
-      return response.error(req, res, "Not country found", 404);
-    }
 
     const { name, countryId } = req.body;
     await db.city.update(
@@ -126,14 +111,8 @@ exports.updatedCity = async (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [
-        {
-          model: db.country,
-          attributes: ["id", "name"],
-          include: [{ model: db.region, attributes: ["id", "name"] }],
-        },
-      ],
-      attributes: ["id", "name"],
+      include: joinInclude,
+      attributes: joinAttributes,
     });
     response.success(req, res, cityUpdated, 200);
   } catch (err) {

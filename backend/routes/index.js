@@ -6,15 +6,33 @@ const { body } = require("express-validator");
 
 //import controller
 const authController = require("../controllers/authController");
+const channelController = require("../controllers/channelController");
 const cityController = require("../controllers/cityController");
 const companyController = require("../controllers/companyController");
+const contactController = require("../controllers/contactController");
 const countryController = require("../controllers/countryController");
+const preferenceController = require("../controllers/preferenceController");
 const regionController = require("../controllers/regionController");
 const userController = require("../controllers/userController");
 
 module.exports = function () {
   //auth
   router.post("/login", authController.login);
+
+  //channel
+  router.get("/channel", secure("isEnable"), channelController.listChannel);
+  router.get("/channel/:id", secure("isEnable"), channelController.getChannel);
+  router.post("/channel", secure("isEnable"), channelController.insertChannel);
+  router.put(
+    "/channel/:id",
+    secure("isEnable"),
+    channelController.updatedChannel
+  );
+  router.delete(
+    "/channel/:id",
+    secure("isEnable"),
+    channelController.deletedChannel
+  );
 
   //city
   router.get("/city", secure("isEnable"), cityController.listCity);
@@ -38,6 +56,21 @@ module.exports = function () {
     companyController.deletedCompany
   );
 
+  //contact
+  router.get("/contact", secure("isEnable"), contactController.listContact);
+  router.get("/contact/:id", secure("isEnable"), contactController.getContact);
+  router.post("/contact", secure("isEnable"), contactController.insertContact);
+  router.put(
+    "/contact/:id",
+    secure("isEnable"),
+    contactController.updatedContact
+  );
+  router.delete(
+    "/contact/:id",
+    secure("isEnable"),
+    contactController.deletedContact
+  );
+
   //country
   router.get("/country", secure("isEnable"), countryController.listCountry);
   router.get("/country/:id", secure("isEnable"), countryController.getCountry);
@@ -51,6 +84,33 @@ module.exports = function () {
     "/country/:id",
     secure("isEnable"),
     countryController.deletedCountry
+  );
+
+  //preferences
+  router.get(
+    "/preference",
+    secure("isEnable"),
+    preferenceController.listPreference
+  );
+  router.get(
+    "/preference/:id",
+    secure("isEnable"),
+    preferenceController.getPreference
+  );
+  router.post(
+    "/preference",
+    secure("isEnable"),
+    preferenceController.insertPreference
+  );
+  router.put(
+    "/preference/:id",
+    secure("isEnable"),
+    preferenceController.updatedPreference
+  );
+  router.delete(
+    "/preference/:id",
+    secure("isEnable"),
+    preferenceController.deletedPreference
   );
 
   //region

@@ -4,12 +4,26 @@ const chalk = require("chalk");
 const db = require("../store/db");
 const response = require("../network/response");
 
+const joinInclude = [{ model: db.region, attributes: ["id", "name"] }];
+const joinAttributes = ["id", "name"];
+
 exports.listCountry = async (req, res) => {
   try {
-    const countrys = await db.country.findAll({
-      include: [{ model: db.region, attributes: ["id", "name"] }],
-      attributes: ["id", "name"],
-    });
+    let countrys;
+    if (req.query.regionId) {
+      countrys = await db.country.findAll({
+        where: {
+          RegionId: +req.query.regionId,
+        },
+        include: joinInclude,
+        attributes: joinAttributes,
+      });
+    } else {
+      countrys = await db.country.findAll({
+        include: joinInclude,
+        attributes: joinAttributes,
+      });
+    }
     response.success(req, res, countrys, 200);
   } catch (err) {
     console.error(chalk.red("ctr-country-list"), err);
@@ -40,15 +54,6 @@ exports.getCountry = async (req, res) => {
 exports.insertCountry = async (req, res) => {
   try {
     const { name, regionId } = req.body;
-
-    const region = await db.region.findOne({
-      where: {
-        id: req.body.regionId,
-      },
-    });
-    if (!region) {
-      return response.error(req, res, "Not region found", 404);
-    }
 
     const create = await db.country.create({
       name,
@@ -86,15 +91,6 @@ exports.updatedCountry = async (req, res) => {
 
     if (!country) {
       return response.error(req, res, "Not found", 404);
-    }
-    
-    const region = await db.region.findOne({
-      where: {
-        id: req.body.regionId,
-      },
-    });
-    if (!region) {
-      return response.error(req, res, "Not region found", 404);
     }
 
     const { name } = req.body;

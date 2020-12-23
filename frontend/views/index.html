@@ -10,12 +10,18 @@
       type="text/css"
       href="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.22/b-1.6.5/r-2.2.6/sl-1.3.1/datatables.min.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 
     <script
       type="text/javascript"
       src="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.22/b-1.6.5/r-2.2.6/sl-1.3.1/datatables.min.js"
     ></script>
-    <title>Document</title>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <title>Data Warehouse</title>
   </head>
   <body class="index">
     <header class="barra">
@@ -27,10 +33,11 @@
         <ul id="ul-menu" class="ul-menu">
           <li class="menuCompany"><a href="#companias">Compañías</a></li>
           <li class="menuContact"><a href="#contactos">Contactos</a></li>
-          <li class="menuCity"><a href="#region-ciudad">Región / Ciudad</a></li>
+          <li class="menuRegion"><a href="#region-ciudad">Región / Ciudad</a></li>
           <li class="menuUser"><a href="#usuarios">Usuarios</a></li>
         </ul>
       </aside>
+      <!-- append content -->
       <div class="contenedor-table"></div>
     </main>
     <!--Modal para Usuarios-->
@@ -50,9 +57,9 @@
           <form id="formUser">
             <div class="modal-body">
               <input id="userId" hidden />
-              <label for="" class="col-form-label">Name:</label>
+              <label for="" class="col-form-label">Nombre:</label>
               <input type="text" class="form-control" id="userName" required />
-              <label for="" class="col-form-label">Lastname:</label>
+              <label for="" class="col-form-label">Apellido:</label>
               <input
                 type="text"
                 class="form-control"
@@ -109,7 +116,7 @@
           <form id="formCompany">
             <div class="modal-body">
               <input id="companyId" hidden />
-              <label for="" class="col-form-label">Name:</label>
+              <label for="" class="col-form-label">Nombre:</label>
               <input
                 type="text"
                 class="form-control"
@@ -123,9 +130,9 @@
                 id="companyEmail"
                 required
               />
-              <label for="" class="col-form-label">City:</label>
+              <label for="" class="col-form-label">Ciudad:</label>
               <select class="form-control" id="companyCity"></select>
-              <label for="" class="col-form-label">Address:</label>
+              <label for="" class="col-form-label">Dirección:</label>
               <input
                 type="text"
                 class="form-control"
@@ -150,7 +157,7 @@
       </div>
     </div>
 
-    <!--Modal para Compañias-->
+    <!--Modal para Contactos-->
     <div
       id="modalContact"
       class="modal fade"
@@ -170,21 +177,21 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <input id="contactId" hidden />
-                    <label for="" class="col-form-label">Name:</label>
+                    <label for="" class="col-form-label">Nombre:</label>
                     <input
                       type="text"
                       class="form-control"
                       id="contactName"
                       required
                     />
-                    <label for="" class="col-form-label">LastName:</label>
+                    <label for="" class="col-form-label">Apellido:</label>
                     <input
                       type="text"
                       class="form-control"
                       id="contactLastName"
                       required
                     />
-                    <label for="" class="col-form-label">Position:</label>
+                    <label for="" class="col-form-label">Cargo:</label>
                     <input
                       type="text"
                       class="form-control"
@@ -198,23 +205,80 @@
                       id="contactEmail"
                       required
                     />
-                    <label for="" class="col-form-label">Company:</label>
+                    <label for="" class="col-form-label">Compañía:</label>
                     <select class="form-control" id="contactCompany"></select>
                   </div>
 
                   <div class="col-sm-6">
-                    <label for="" class="col-form-label">Region:</label>
+                    <label for="" class="col-form-label">Región:</label>
                     <select class="form-control" id="contactRegion"></select>
-                    <label for="" class="col-form-label">Country:</label>
+                    <label for="" class="col-form-label">País:</label>
                     <select class="form-control" id="contactCountry"></select>
-                    <label for="" class="col-form-label">City:</label>
+                    <label for="" class="col-form-label">Ciudad:</label>
                     <select class="form-control" id="contactCity"></select>
-                    <label for="" class="col-form-label">Address:</label>
+                    <label for="" class="col-form-label">Dirección:</label>
                     <input
                       type="text"
                       class="form-control"
                       id="contactAddress"
                       required
+                    />
+                    <div class="row contact-interest">
+                      <div class="col-sm-9">
+                        <label for="">Interés:</label><br>
+                        <progress
+                          class="progress-interes"
+                          id="contactInterest"
+                          value=""
+                          max="100"
+                        >
+                          0%
+                        </progress>
+                      </div>
+                      <div>
+                        <select id="contactPercentage">
+                          <option value="0%">0%</option>
+                          <option value="25%">25%</option>
+                          <option value="50%">50%</option>
+                          <option value="75%">75%</option>
+                          <option value="100%">100%</option>
+                        </select>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label for="" class="col-form-label"
+                      >Canal de contacto:</label
+                    >
+                    <select class="form-control" id="contactChannel"></select>
+                  </div>
+                  <div class="col-sm-3">
+                    <label for="" class="col-form-label"
+                      >Cuenta de usuario:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="contactUserAccount"
+                      required
+                    />
+                  </div>
+                  <div class="col-sm-3">
+                    <label for="" class="col-form-label">Preferencias:</label>
+                    <select
+                      class="form-control"
+                      id="contactPreferences"
+                    ></select>
+                  </div>
+                  <div class="col-sm-3">
+                    <input
+                      type="text"
+                      class="form-control add-channel"
+                      id="contactAddChannel"
+                      placeholder="+ Add Channel"
                     />
                   </div>
                 </div>

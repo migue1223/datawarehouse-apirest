@@ -9,12 +9,13 @@ html {
 body {
   font-family: "Lato", sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .barra {
   background-color: #455a64;
   padding: 1rem;
-  height: 60px;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,7 +24,7 @@ body {
 .barra h1 {
   color: white;
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 2rem;
 }
 
 .barra a {
@@ -53,10 +54,41 @@ body {
 
 .contenedor-menu ul li a {
   color: white;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .contenedor-table {
-  width: 100%;
+  width: 1200px;
+  margin: 0 auto;
   padding: 1rem;
+}
+
+.contact-interest {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.contact-interest select {
+  margin-right: 15px;
+}
+
+.add-channel {
+  margin-top: 37px;
+}
+
+.add-channel:hover {
+  cursor: pointer;
+}
+
+th,
+td {
+  white-space: nowrap;
+}
+
+.progress-interes {
+  border: 2px;
+  width: 250px;
 }
