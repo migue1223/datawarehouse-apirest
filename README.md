@@ -21,7 +21,7 @@ FrontEnd and Backend Project of the Full Stack Web Development course by Acámic
 - Clone repository from [next link](https://github.com/migue1223/datawarehouse.git)
 
 - Open terminal and run:
-mkdir datawarehouse
+`mkdir datawarehouse`
 `git clone https://github.com/migue1223/datawarehouse.git`
 
 ### Step 2: Install dependencies
@@ -32,7 +32,7 @@ mkdir datawarehouse
 
 ### Step 3: Set environment variables
 
-- Open file `index.js` located inside the folder `config` of the cloned project backend or create the file .env
+- Open file `index.js` located inside the folder `config` of the cloned project `backend` or create the file .env
 - Replace all variables by your mysql and jwt secret configuration
 
 ### Step 4: Create the database
@@ -44,16 +44,16 @@ mkdir datawarehouse
 - Enter the route from the browser `http://localhost/phpmyadmin/index.php`
 - Open file `database.sql` located inside the folder `store` from the cloned project backend
 - the file can be imported or its content can be copied and pasted into the SQL tab
-- You can run `npm run database` from the project root backend to create the whole database from the console and wait a few seconds while everything is configured
+- You can run `npm run database` from the project root `backend` to create the whole database from the console and wait a few seconds while everything is configured
 - You can use HeidiSql, MySqlWorbench, DBeaver for database administration.
 
 ### Step 5: Start the server
 
-- From the terminal located at the root of the project backend, execute:
+- From the terminal located at the root of the project `backend`, execute:
 
 `npm run start`
 
-- From the terminal located at the root of the project frontend, views:
+- From the terminal located at the root of the project `frontend`, views:
 
 `open index.html`
 
@@ -66,4 +66,4 @@ mkdir datawarehouse
 
 ## API documentation
 
-- To view the API documentation, you can open the file `swagger.json` located in the root directory of the project or you can put in your browser [this link](http://localhost:3000/api-docs)
+- To view the API documentation, you can open the file `swagger.json` located in the root directory `backend` of the project or you can put in your browser [this link](http://localhost:3000/api-docs)
