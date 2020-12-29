@@ -26,7 +26,7 @@ FrontEnd and Backend Project of the Full Stack Web Development course by Acámic
 
 ### Step 2: Install dependencies
 
-- In the root directory backend and frontend where the project was cloned run from the terminal:
+- In the root directory `backend` and `frontend` where the project was cloned run from the terminal:
 
 `npm install`
 
@@ -42,8 +42,8 @@ FrontEnd and Backend Project of the Full Stack Web Development course by Acámic
 - If you cannot find XAMPP Control Panel, by terminal execute:
   `sudo /opt/lampp/lampp start`
 - Enter the route from the browser `http://localhost/phpmyadmin/index.php`
-- Open file `database.sql` located inside the folder `store` from the cloned project backend
-- the file can be imported or its content can be copied and pasted into the SQL tab
+- Open file `database.sql` located inside the folder `store` from the cloned project `backend`
+- The file can be imported or its content can be copied and pasted into the SQL tab
 - You can run `npm run database` from the project root `backend` to create the whole database from the console and wait a few seconds while everything is configured
 - You can use HeidiSql, MySqlWorbench, DBeaver for database administration.
 
@@ -62,7 +62,7 @@ FrontEnd and Backend Project of the Full Stack Web Development course by Acámic
 - If you do not have Postman installed, please go to [this link](https://www.postman.com/downloads/)
 - Open Postman, click on `File`, click on `Import`, click on `Import From Link` and paste the following `https://www.getpostman.com/collections/466bcd40bb0cd600b26c`
 - Make the desired queries
-- Default user: user: admin, password: admin123
+- Default user: `user: admin`, `password: admin123`
 
 ## API documentation
 
