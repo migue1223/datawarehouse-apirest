@@ -3,6 +3,8 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import Swal from 'sweetalert2';
+import endpoint from './api';
+import functions from './functions';
 
 let opcionContact = null;
 let idContact,
@@ -20,8 +22,6 @@ let idContact,
   userAccountContact,
   preferencesContact,
   filaContact;
-const API_CONTACT = localStorage.getItem('API');
-const TOKEN_CONTACT = localStorage.getItem('token');
 
 const formContact = document.getElementById('formContact');
 const modalContact = document.getElementById('modalContact');
@@ -67,206 +67,6 @@ if (menuContact) {
   });
 }
 
-async function renderDataContact() {
-  const getContacts = await fetch(`${API_CONTACT}/contact`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const contacts = await getContacts.json();
-  return contacts.data;
-}
-
-async function createdContact(contact) {
-  const createContact = await fetch(`${API_CONTACT}/contact`, {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: contact.name,
-      lastname: contact.lastname,
-      position: contact.position,
-      email: contact.email,
-      companyId: contact.companyId,
-      regionId: contact.regionId,
-      countryId: contact.countryId,
-      cityId: +contact.cityId,
-      address: contact.address,
-      interests: contact.interests,
-      channelId: contact.channelId,
-      useraccount: contact.useraccount,
-      preferencesId: contact.preferencesId,
-    }),
-  });
-  const result = await createContact.json();
-  return result;
-}
-
-async function getContactEmail(email) {
-  const getContact = await fetch(`${API_CONTACT}/contact?email=${email}`, {
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const contact = await getContact.json();
-  return contact;
-}
-
-async function getCompanys() {
-  const getCompany = await fetch(`${API_CONTACT}/company`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const result = await getCompany.json();
-  return result.data;
-}
-
-async function getRegions() {
-  const getRegion = await fetch(`${API_CONTACT}/region`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const result = await getRegion.json();
-  return result.data;
-}
-
-async function getCountrys() {
-  const getCountry = await fetch(`${API_CONTACT}/country`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const result = await getCountry.json();
-  return result.data;
-}
-
-async function getCountrysRegionId(id) {
-  const getCountry = await fetch(`${API_CONTACT}/country?regionId=${id}`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const result = await getCountry.json();
-  return result.data;
-}
-
-async function getCitys() {
-  const getCity = await fetch(`${API_CONTACT}/city`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const result = await getCity.json();
-  return result.data;
-}
-
-async function getCitysContactCountryId(id) {
-  const getCity = await fetch(`${API_CONTACT}/city?countryId=${id}`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const result = await getCity.json();
-  return result.data;
-}
-
-async function getChannels() {
-  const getChannel = await fetch(`${API_CONTACT}/channel`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const result = await getChannel.json();
-  return result.data;
-}
-
-async function getPreferences() {
-  const getPreference = await fetch(`${API_CONTACT}/preference`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const result = await getPreference.json();
-  return result.data;
-}
-
-async function updatedContact(contact) {
-  const updateContact = await fetch(`${API_CONTACT}/contact/${contact.id}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: contact.name,
-      lastname: contact.lastname,
-      position: contact.position,
-      email: contact.email,
-      companyId: contact.companyId,
-      regionId: contact.regionId,
-      countryId: contact.countryId,
-      cityId: +contact.cityId,
-      address: contact.address,
-      interests: contact.interests,
-      channelId: contact.channelId,
-      useraccount: contact.useraccount,
-      preferencesId: contact.preferencesId,
-    }),
-  });
-  const result = await updateContact.json();
-  return result;
-}
-
-async function deletedContact(id) {
-  const deleteContact = await fetch(`${API_CONTACT}/contact/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_CONTACT,
-    },
-  });
-  const result = await deleteContact.json();
-  return result;
-}
-
-async function renderOptionSelectContact(contenedor, data, id, title) {
-  const delOption = contenedor.querySelectorAll('option');
-
-  if (delOption.length > 0) {
-    delOption.forEach((op) => op.parentElement.removeChild(op));
-  }
-
-  const optionSelect = document.createElement('option');
-  const textOptionSelect = document.createTextNode(title);
-  optionSelect.appendChild(textOptionSelect);
-  contenedor.appendChild(optionSelect);
-
-  data.forEach((ci) => {
-    const option = document.createElement('option');
-    const textOption = document.createTextNode(ci.name);
-    option.value = ci.id;
-    option.appendChild(textOption);
-    if (id) {
-      if (ci.id === id) {
-        option.selected = true;
-      }
-    }
-    contenedor.appendChild(option);
-  });
-}
-
 async function renderTableContact() {
   $('.contenedor-table').empty();
   $('.contenedor-table').append(`
@@ -302,13 +102,20 @@ async function renderTableContact() {
       </div>  
     </div>
   `);
-  const contacts = await renderDataContact();
+  const contacts = await endpoint.renderDataContact();
   $('#tableContact').DataTable({
     data: contacts,
     scrollY: '500px',
     scrollX: true,
     scrollCollapse: true,
     paging: false,
+    deferRender: true,
+    retrieve: true,
+    proccesing: true,
+    destroy: true,
+    dom: 'Bfrtilp',
+    buttons: functions.buttonsTable,
+    order: [],
     columns: [
       {
         data: null,
@@ -384,52 +191,68 @@ async function renderTableContact() {
         targets: 10,
         data: 'City',
         render: function (data) {
-          return (
-            '<span data-idcity=' +
-            data.City.id +
-            '>' +
-            data.City.name +
-            '</span>'
-          );
+          if (data.City) {
+            return (
+              '<span data-idcity=' +
+              data.City.id +
+              '>' +
+              data.City.name +
+              '</span>'
+            );
+          } else {
+            return '<span></span>';
+          }
         },
       },
       {
         targets: 11,
         data: 'Country',
         render: function (data) {
-          return (
-            '<span data-idcountry=' +
-            data.Country.id +
-            '>' +
-            data.Country.name +
-            '</span>'
-          );
+          if (data.Country) {
+            return (
+              '<span data-idcountry=' +
+              data.Country.id +
+              '>' +
+              data.Country.name +
+              '</span>'
+            );
+          } else {
+            return '<span></span>';
+          }
         },
       },
       {
         targets: 12,
         data: 'Region',
         render: function (data) {
-          return (
-            '<span data-idregion=' +
-            data.Region.id +
-            '>' +
-            data.Region.name +
-            '</span>'
-          );
+          if (data.Region) {
+            return (
+              '<span data-idregion=' +
+              data.Region.id +
+              '>' +
+              data.Region.name +
+              '</span>'
+            );
+          } else {
+            return '<span></span>';
+          }
         },
       },
       {
         targets: 13,
         data: 'Company',
         render: function (data) {
-          return (
-            '<span data-idcompany=' +
-            data.Company.id +
-            '>' +
-            data.Company.name +
-            '</span>'
-          );
+          if (data.Company) {
+            return (
+              '<span data-idcompany=' +
+              data.Company.id +
+              '>' +
+              data.Company.name +
+              '</span>'
+            );
+          } else {
+            return '<span></span>';
+          }
         },
       },
     ],
@@ -445,24 +268,24 @@ async function createdContactId() {
   modalHeaderContact.style.color = '#FFFFFF';
   modalTitleContact.innerHTML = 'Crear Contacto';
   $(modalContact).modal('show');
-  const companys = await getCompanys();
-  renderOptionSelectContact(
+  const companys = await endpoint.getCompanys();
+  functions.renderOptionSelect(
     selectCompanyContact,
     companys,
     '',
     'Seleccionar compañía'
   );
-  const regions = await getRegions();
-  renderOptionSelectContact(
+  const regions = await endpoint.getRegions();
+  functions.renderOptionSelect(
     selectRegionContact,
     regions,
     '',
     'Seleccionar región'
   );
-  const channels = await getChannels();
-  renderOptionSelectContact(selectChannelContact, channels, '', 'Canal');
-  const preferences = await getPreferences();
-  renderOptionSelectContact(
+  const channels = await endpoint.getChannels();
+  functions.renderOptionSelect(selectChannelContact, channels, '', 'Canal');
+  const preferences = await endpoint.getPreferences();
+  functions.renderOptionSelect(
     selectPreferencesContact,
     preferences,
     '',
@@ -473,8 +296,8 @@ async function createdContactId() {
 if (selectRegionContact) {
   selectRegionContact.addEventListener('change', async () => {
     const id = selectRegionContact.value;
-    const countrys = await getCountrysRegionId(id);
-    renderOptionSelectContact(
+    const countrys = await endpoint.getCountrysRegionId(id);
+    functions.renderOptionSelect(
       selectCountryContact,
       countrys,
       '',
@@ -486,8 +309,8 @@ if (selectRegionContact) {
 if (selectCountryContact) {
   selectCountryContact.addEventListener('change', async () => {
     const id = selectCountryContact.value;
-    const citys = await getCitysContactCountryId(id);
-    renderOptionSelectContact(
+    const citys = await endpoint.getCitysContactCountryId(id);
+    functions.renderOptionSelect(
       selectCityContact,
       citys,
       '',
@@ -555,43 +378,43 @@ async function editContactId(e) {
   modalHeaderContact.style.color = '#FFFFFF';
   modalTitleContact.innerHTML = 'Editar Contacto';
 
-  const companys = await getCompanys();
-  renderOptionSelectContact(
+  const companys = await endpoint.getCompanys();
+  functions.renderOptionSelect(
     selectCompanyContact,
     companys,
     +companyContact,
     'Seleccionar compañía'
   );
-  const regions = await getRegions();
-  renderOptionSelectContact(
+  const regions = await endpoint.getRegions();
+  functions.renderOptionSelect(
     selectRegionContact,
     regions,
     +regionContact,
     'Seleccionar región'
   );
-  const countrys = await getCountrys();
-  renderOptionSelectContact(
+  const countrys = await endpoint.getCountrys();
+  functions.renderOptionSelect(
     selectCountryContact,
     countrys,
     +countryContact,
     'Seleccionar país'
   );
-  const citys = await getCitys();
-  renderOptionSelectContact(
+  const citys = await endpoint.getCitys();
+  functions.renderOptionSelect(
     selectCityContact,
     citys,
     +cityContact,
     'Seleccionar ciudad'
   );
-  const channels = await getChannels();
-  renderOptionSelectContact(
+  const channels = await endpoint.getChannels();
+  functions.renderOptionSelect(
     selectChannelContact,
     channels,
     +channelContact,
     'Canal'
   );
-  const preferences = await getPreferences();
-  renderOptionSelectContact(
+  const preferences = await endpoint.getPreferences();
+  functions.renderOptionSelect(
     selectPreferencesContact,
     preferences,
     +preferencesContact,
@@ -614,7 +437,7 @@ async function deletedContactId(e) {
     confirmButtonText: `Confirmar`,
   }).then(async (result) => {
     if (result.isConfirmed) {
-      const deleteCompany = await deletedContact(idContact);
+      const deleteCompany = await endpoint.deletedContact(idContact);
       if (deleteCompany.status === 200) {
         Swal.fire('¡Registro Eliminado!', '', 'success');
         await renderTableContact();
@@ -646,7 +469,7 @@ formContact.addEventListener('submit', async (e) => {
     preferencesId: +selectPreferencesContact.value.trim(),
   };
   if (opcionContact === 'crear') {
-    const contactCreated = await createdContact(contact);
+    const contactCreated = await endpoint.createdContact(contact);
     if (contactCreated.status === 201) {
       Swal.fire('!Registro creado!', '', 'success');
       await renderTableContact();
@@ -656,7 +479,7 @@ formContact.addEventListener('submit', async (e) => {
     }
   }
   if (opcionContact === 'editar') {
-    const contactUpdated = await updatedContact(contact);
+    const contactUpdated = await endpoint.updatedContact(contact);
     if (contactUpdated.status === 200) {
       Swal.fire('!Registro actualizado!', '', 'success');
       await renderTableContact();
@@ -672,20 +495,12 @@ formContact.addEventListener('submit', async (e) => {
 inputEmailContact.addEventListener('blur', async () => {
   emailContact = inputEmailContact.value.trim();
   if (emailContact !== '') {
-    const validEmailContact = await getContactEmail(emailContact);
-    const span = document.createElement('span');
-    const textSpan = document.createTextNode('Contact ya existe');
-    span.append(textSpan);
-    span.classList = 'btn-danger';
-    const br = document.createElement('br');
-    if (validEmailContact.status === 200) {
-      inputEmailContact.after(span, br);
-      setTimeout(() => {
-        span.remove();
-        br.remove();
-        inputEmailContact.value = '';
-      }, 2000);
-    }
+    const validEmailContact = await endpoint.getContactEmail(emailContact);
+    functions.renderSpanError(
+      validEmailContact,
+      inputEmailContact,
+      'Email ya existe'
+    );
   }
 });
 
@@ -695,3 +510,5 @@ if (selectPercentageContact) {
     progressContact.value = +percentage.replace('%', '');
   });
 }
+
+export default renderTableContact;

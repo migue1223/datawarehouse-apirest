@@ -3,16 +3,18 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import Swal from 'sweetalert2';
+import endpoint from './api';
+import functions from './functions';
 
 let opcionCompany = null;
 let idCompany,
   nameCompany,
   emailCompany,
+  regionCompany,
+  countryCompany,
   cityCompany,
   addressCompany,
   filaCompany;
-const API_COMPANY = localStorage.getItem('API');
-const TOKEN_COMPANY = localStorage.getItem('token');
 
 const formCompany = document.getElementById('formCompany');
 const modalCompany = document.getElementById('modalCompany');
@@ -20,6 +22,8 @@ const modalHeaderCompay = document.querySelector('.modal-header-company');
 const modalTitleCompany = document.querySelector('.modal-title-company');
 const inputIdCompany = document.getElementById('companyId');
 const inputNameCompany = document.getElementById('companyName');
+const selectRegionCompany = document.getElementById('companyRegion');
+const selectCountryCompany = document.getElementById('companyCountry');
 const selectCityCompany = document.getElementById('companyCity');
 const inputEmailCompany = document.getElementById('companyEmail');
 const inputAddressCompany = document.getElementById('companyAddress');
@@ -47,112 +51,6 @@ if (menuCompany) {
   });
 }
 
-async function renderDataCompany() {
-  const getCompanys = await fetch(`${API_COMPANY}/company`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_COMPANY,
-    },
-  });
-  const companys = await getCompanys.json();
-  return companys.data;
-}
-
-async function createdCompany(company) {
-  const createCompany = await fetch(`${API_COMPANY}/company`, {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_COMPANY,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: company.name,
-      email: company.email,
-      address: company.address,
-      cityId: +company.cityId,
-    }),
-  });
-  const result = await createCompany.json();
-  return result;
-}
-
-async function getCompanyName(name) {
-  const getCompany = await fetch(`${API_COMPANY}/company?name=${name}`, {
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_COMPANY,
-    },
-  });
-  const company = await getCompany.json();
-  return company;
-}
-
-async function getCitys() {
-  const getCity = await fetch(`${API_COMPANY}/city`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_COMPANY,
-    },
-  });
-  const result = await getCity.json();
-  return result.data;
-}
-
-async function updatedCompany(company) {
-  const updateCompany = await fetch(`${API_COMPANY}/company/${company.id}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_COMPANY,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: company.name,
-      email: company.email,
-      cityId: company.cityId,
-      address: company.address,
-    }),
-  });
-  const result = await updateCompany.json();
-  return result;
-}
-
-async function deletedCompany(id) {
-  const deleteCompany = await fetch(`${API_COMPANY}/company/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_COMPANY,
-    },
-  });
-  const result = await deleteCompany.json();
-  return result;
-}
-
-async function renderOptionCitys(id) {
-  const city = await getCitys();
-  const delOption = selectCityCompany.querySelectorAll('option');
-
-  if (delOption.length > 0) {
-    delOption.forEach((op) => op.parentElement.removeChild(op));
-  }
-
-  const optionCity = document.createElement('option');
-  const textOptionCity = document.createTextNode('Seleccionar ciudad');
-  optionCity.appendChild(textOptionCity);
-  selectCityCompany.appendChild(optionCity);
-
-  city.forEach((ci) => {
-    const option = document.createElement('option');
-    const textOption = document.createTextNode(ci.name);
-    option.value = ci.id;
-    option.appendChild(textOption);
-    if (id) {
-      if (ci.id === id) {
-        option.selected = true;
-      }
-    }
-    selectCityCompany.appendChild(option);
-  });
-}
-
 async function renderTableCompany() {
   $('.contenedor-table').empty();
   $('.contenedor-table').append(`
@@ -168,6 +66,8 @@ async function renderTableCompany() {
                 <th><input type="checkbox"></th>
                 <th>Nombre</th>
                 <th>Email</th>
+                <th>Región</th>
+                <th>País</th>
                 <th>Ciudad</th>
                 <th>Dirección</th>
                 <th>Acciones</th>
@@ -179,15 +79,26 @@ async function renderTableCompany() {
       </div>  
     </div>
   `);
-  const companys = await renderDataCompany();
+  const companys = await endpoint.renderDataCompany();
   $('#tableCompany').DataTable({
     data: companys,
+    deferRender: true,
+    retrieve: true,
+    proccesing: true,
+    iDisplayLength: 10,
+    destroy: true,
+    dom: 'Bfrtilp',
+    buttons: functions.buttonsTable,
+    responsive: true,
+    order: [],
     columns: [
       {
         data: null,
       },
       { data: 'name' },
       { data: 'email' },
+      { data: null },
+      { data: null },
       { data: null },
       { data: 'address' },
       {
@@ -207,13 +118,51 @@ async function renderTableCompany() {
         targets: 3,
         data: 'City',
         render: function (data) {
-          return (
-            '<span type="checkbox" data-idcity="' +
-            data.City.id +
-            '">' +
-            data.City.name +
-            '</span>'
-          );
+          if (data.City) {
+            return (
+              '<span data-idregion="' +
+              data.City.Country.Region.id +
+              '">' +
+              data.City.Country.Region.name +
+              '</span>'
+            );
+          } else {
+            return '<span></span>';
+          }
+        },
+      },
+      {
+        targets: 4,
+        data: 'City',
+        render: function (data) {
+          if (data.City) {
+            return (
+              '<span data-idcountry="' +
+              data.City.Country.id +
+              '">' +
+              data.City.Country.name +
+              '</span>'
+            );
+          } else {
+            return '<span></span>';
+          }
+        },
+      },
+      {
+        targets: 5,
+        data: 'City',
+        render: function (data) {
+          if (data.City) {
+            return (
+              '<span data-idcity="' +
+              data.City.id +
+              '">' +
+              data.City.name +
+              '</span>'
+            );
+          } else {
+            return '<span></span>';
+          }
         },
       },
     ],
@@ -229,11 +178,43 @@ async function createdCompanyId() {
   modalHeaderCompay.style.color = '#FFFFFF';
   modalTitleCompany.innerHTML = 'Crear Compañía';
   $(modalCompany).modal('show');
-  await renderOptionCitys();
+  const regions = await endpoint.getRegions();
+  functions.renderOptionSelect(
+    selectRegionCompany,
+    regions,
+    '',
+    'Seleccionar región'
+  );
+}
+
+if (selectRegionCompany) {
+  selectRegionCompany.addEventListener('change', async () => {
+    const id = selectRegionCompany.value;
+    const countrys = await endpoint.getCountrysRegionId(id);
+    functions.renderOptionSelect(
+      selectCountryCompany,
+      countrys,
+      '',
+      'Seleccionar país'
+    );
+  });
+}
+
+if (selectCountryCompany) {
+  selectCountryCompany.addEventListener('change', async () => {
+    const id = selectCountryCompany.value;
+    const citys = await endpoint.getCitysContactCountryId(id);
+    functions.renderOptionSelect(
+      selectCityCompany,
+      citys,
+      '',
+      'Seleccionar ciudad'
+    );
+  });
 }
 
 //EDITAR
-function editCompanyId(e) {
+async function editCompanyId(e) {
   opcionCompany = 'editar';
   filaCompany = e.path[4];
   idCompany = +filaCompany
@@ -242,12 +223,20 @@ function editCompanyId(e) {
     .dataset.idcompany.trim();
   nameCompany = filaCompany.getElementsByTagName('td')[1].innerHTML.trim();
   emailCompany = filaCompany.getElementsByTagName('td')[2].innerHTML.trim();
-  cityCompany = +filaCompany.getElementsByTagName('td')[3].querySelector('span')
+  regionCompany = +filaCompany
+    .getElementsByTagName('td')[3]
+    .querySelector('span').dataset.idregion;
+  countryCompany = +filaCompany
+    .getElementsByTagName('td')[4]
+    .querySelector('span').dataset.idcountry;
+  cityCompany = +filaCompany.getElementsByTagName('td')[5].querySelector('span')
     .dataset.idcity;
-  addressCompany = filaCompany.getElementsByTagName('td')[4].innerHTML.trim();
+  addressCompany = filaCompany.getElementsByTagName('td')[6].innerHTML.trim();
 
   inputIdCompany.value = idCompany;
   inputNameCompany.value = nameCompany;
+  selectRegionCompany.value = regionCompany;
+  selectCountryCompany.value = countryCompany;
   selectCityCompany.value = cityCompany;
   inputEmailCompany.value = emailCompany;
   inputAddressCompany.value = addressCompany;
@@ -255,7 +244,29 @@ function editCompanyId(e) {
   modalHeaderCompay.style.backgroundColor = '#17A2B8';
   modalHeaderCompay.style.color = '#FFFFFF';
   modalTitleCompany.innerHTML = 'Editar Compañía';
-  renderOptionCitys(cityCompany);
+
+  const regions = await endpoint.getRegions();
+  functions.renderOptionSelect(
+    selectRegionCompany,
+    regions,
+    regionCompany,
+    'Seleccionar región'
+  );
+  const countrys = await endpoint.getCountrys();
+  functions.renderOptionSelect(
+    selectCountryCompany,
+    countrys,
+    countryCompany,
+    'Seleccionar país'
+  );
+  const citys = await endpoint.getCitys();
+  functions.renderOptionSelect(
+    selectCityCompany,
+    citys,
+    cityCompany,
+    'Seleccionar ciudad'
+  );
+
   $(modalCompany).modal('show');
 }
 
@@ -272,7 +283,7 @@ async function deletedCompanyId(e) {
     confirmButtonText: `Confirmar`,
   }).then(async (result) => {
     if (result.isConfirmed) {
-      const deleteCompany = await deletedCompany(idCompany);
+      const deleteCompany = await endpoint.deletedCompany(idCompany);
       if (deleteCompany.status === 200) {
         Swal.fire('¡Registro Eliminado!', '', 'success');
         await renderTableCompany();
@@ -290,12 +301,14 @@ formCompany.addEventListener('submit', async (e) => {
   const company = {
     id: +inputIdCompany.value.trim(),
     name: inputNameCompany.value.trim(),
-    cityId: +selectCityCompany.value.trim(),
     email: inputEmailCompany.value.trim(),
+    regionId: +selectRegionCompany.value.trim(),
+    countryId: +selectCountryCompany.value.trim(),
+    cityId: +selectCityCompany.value.trim(),
     address: inputAddressCompany.value.trim(),
   };
   if (opcionCompany === 'crear') {
-    const companyCreated = await createdCompany(company);
+    const companyCreated = await endpoint.createdCompany(company);
     if (companyCreated.status === 201) {
       Swal.fire('!Registro creado!', '', 'success');
       await renderTableCompany();
@@ -305,7 +318,7 @@ formCompany.addEventListener('submit', async (e) => {
     }
   }
   if (opcionCompany === 'editar') {
-    const companyUpdated = await updatedCompany(company);
+    const companyUpdated = await endpoint.updatedCompany(company);
     if (companyUpdated.status === 200) {
       Swal.fire('!Registro actualizado!', '', 'success');
       await renderTableCompany();
@@ -321,19 +334,13 @@ formCompany.addEventListener('submit', async (e) => {
 inputNameCompany.addEventListener('blur', async () => {
   nameCompany = inputNameCompany.value.trim();
   if (nameCompany !== '') {
-    const validNameCompany = await getCompanyName(nameCompany);
-    const span = document.createElement('span');
-    const textSpan = document.createTextNode('Company ya existe');
-    span.append(textSpan);
-    span.classList = 'btn-danger';
-    const br = document.createElement('br');
-    if (validNameCompany.status === 200) {
-      inputNameCompany.after(span, br);
-      setTimeout(() => {
-        span.remove();
-        br.remove();
-        inputNameCompany.value = '';
-      }, 3000);
-    }
+    const validNameCompany = await endpoint.getCompanyName(nameCompany);
+    functions.renderSpanError(
+      validNameCompany,
+      inputNameCompany,
+      'Compañía ya existe'
+    );
   }
 });
+
+export default renderTableCompany;

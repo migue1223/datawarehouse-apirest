@@ -1,7 +1,5 @@
 "use strict";
 
-const moment = require("moment");
-
 module.exports = {
   remoteDB: process.env.REMOTE_DB || false,
   api: {

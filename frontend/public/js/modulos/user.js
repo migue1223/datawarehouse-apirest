@@ -3,11 +3,11 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import Swal from 'sweetalert2';
+import endpoint from './api';
+import functions from './functions';
 
 let opcionUser = null;
 let idUser, nameUser, lastnameUser, emailUser, rolUser, passwordUser, filaUser;
-const API_USER = localStorage.getItem('API') + '/user';
-const TOKEN_USER = localStorage.getItem('token');
 
 const formUser = document.getElementById('formUser');
 const modalUser = document.getElementById('modalUser');
@@ -21,6 +21,13 @@ const inputPasswordUser = document.getElementById('userPassword');
 const inputRolUser = document.getElementById('userRol');
 const menuUser = document.querySelector('.menuUser');
 const contenedorTableUser = document.querySelector('.contenedor-table');
+const user = JSON.parse(sessionStorage.getItem('user'));
+
+if (user) {
+  if (user.isAdmin === 1) {
+    menuUser.style.display = 'block';
+  }
+}
 
 if (contenedorTableUser) {
   contenedorTableUser.addEventListener('click', (e) => {
@@ -41,74 +48,6 @@ if (menuUser) {
   menuUser.addEventListener('click', async () => {
     await renderTableUsers();
   });
-}
-
-async function renderDataUsers() {
-  const getUsers = await fetch(`${API_USER}`, {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_USER,
-    },
-  });
-  const users = await getUsers.json();
-  return users.data;
-}
-
-async function createdUser(user) {
-  const createUser = await fetch(`${API_USER}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: user.name,
-      lastname: user.lastname,
-      email: user.email,
-      rol: user.rol,
-      password: user.password,
-    }),
-  });
-  const result = await createUser.json();
-  return result;
-}
-
-async function getUserEmail(email) {
-  const getUser = await fetch(`${API_USER}?email=${email}`, {
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_USER,
-    },
-  });
-  const user = await getUser.json();
-  return user;
-}
-
-async function updatedUser(user) {
-  const updateUser = await fetch(`${API_USER}/${user.id}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_USER,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: user.name,
-      lastname: user.lastname,
-      email: user.email,
-      rol: user.rol,
-    }),
-  });
-  const result = await updateUser.json();
-  return result;
-}
-
-async function deletedUser(id) {
-  const deleteUser = await fetch(`${API_USER}/${id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: 'Bearer ' + TOKEN_USER,
-    },
-  });
-  const result = await deleteUser.json();
-  return result;
 }
 
 async function renderTableUsers() {
@@ -137,8 +76,17 @@ async function renderTableUsers() {
       </div>  
     </div>
   `);
-  const users = await renderDataUsers();
+  const users = await endpoint.renderDataUsers();
   $('#tableUser').DataTable({
+    deferRender: true,
+    retrieve: true,
+    proccesing: true,
+    iDisplayLength: 10,
+    destroy: true,
+    dom: 'Bfrtilp',
+    buttons: functions.buttonsTable,
+    responsive: true,
+    order: [],
     data: users,
     columns: [
       {
@@ -217,7 +165,7 @@ async function deletedUserId(e) {
     confirmButtonText: `Confirmar`,
   }).then(async (result) => {
     if (result.isConfirmed) {
-      const deleteUser = await deletedUser(idUser);
+      const deleteUser = await endpoint.deletedUser(idUser);
       if (deleteUser.status === 200) {
         Swal.fire('¡Registro Eliminado!', '', 'success');
         await renderTableUsers();
@@ -241,7 +189,7 @@ formUser.addEventListener('submit', async (e) => {
     password: inputPasswordUser.value.trim(),
   };
   if (opcionUser === 'crear') {
-    const userCreated = await createdUser(user);
+    const userCreated = await endpoint.createdUser(user);
     if (userCreated.status === 201) {
       Swal.fire('!Registro creado!', '', 'success');
       await renderTableUsers();
@@ -251,7 +199,7 @@ formUser.addEventListener('submit', async (e) => {
     }
   }
   if (opcionUser === 'editar') {
-    const userUpdated = await updatedUser(user);
+    const userUpdated = await endpoint.updatedUser(user);
     if (userUpdated.status === 200) {
       Swal.fire('!Registro actualizado!', '', 'success');
       await renderTableUsers();
@@ -267,19 +215,9 @@ formUser.addEventListener('submit', async (e) => {
 inputEmailUser.addEventListener('blur', async () => {
   emailUser = inputEmailUser.value.trim();
   if (emailUser !== '') {
-    const validEmail = await getUserEmail(emailUser);
-    const span = document.createElement('span');
-    const textSpan = document.createTextNode('Email ya existe');
-    span.append(textSpan);
-    span.classList = 'btn-danger';
-    const br = document.createElement('br');
-    if (validEmail.status === 200) {
-      inputEmailUser.after(span, br);
-      setTimeout(() => {
-        span.remove();
-        br.remove();
-        inputEmailUser.value = '';
-      }, 3000);
-    }
+    const validEmail = await endpoint.getUserEmail(emailUser);
+    functions.renderSpanError(validEmail, inputEmailUser, 'Email ya existe');
   }
 });
+
+export default renderTableUsers;
