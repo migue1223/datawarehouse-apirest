@@ -1,61 +1,65 @@
-# Delilah Restó API
+# Data Warehouse Desktop and API
 
-Proyecto Backend del curso de Desarrollo Web Full Stack de Acámica.
+FrontEnd and Backend Project of the Full Stack Web Development course by Acámica.
 
-## Tecnologías utilizadas
+## Used technology
 
 - Node.js
-- Libreria Nodemon
-- Libreria Express
-- Libreria Sequelize
+- Nodemon Library
+- Express Library
+- Sequelize Library
 - Json Web Token (JWT)
 - MySQL
 - Postman
 - Swagger
+- Html
+- Css
+- JS
 
-### Paso 1: Clonar Proyecto:
+### Step 1: Clone Project:
 
-- Clonar repositorio desde el [siguiente link](https://github.com/migue1223/delilah_resto.git)
+- Clone repository from [next link](https://github.com/migue1223/delilah_resto.git)
 
-- Abrir terminal y ejecutar
+- Open terminal and run:
+mkdir delilah_resto
+`git clone https://github.com/migue1223/delilah_resto.git`
 
-- mkdir delilah_resto
-- `git clone https://github.com/KaribelBT/delilah_resto.git`
+### Step 2: Install dependencies
 
-### Paso 2: Instalar dependencias
-
-- En el directorio raiz donde se clonó el proyecto ejecutar desde la terminal:
+- In the root directory where the project was cloned run from the terminal:
 
 `npm install`
 
-### Paso 3: Configurar variables de entorno
+### Step 3: Set environment variables
 
-- Abrir el archivo `index.js` ubicado dentro de la carpeta `config` del proyecto clonado o crear el archivo .env
-- Reemplazar todas las variables por la configuración de tu mysql y jwt secret
+- Open file `index.js` located inside the folder `config` of the cloned project or create the file .env
+- Replace all variables by your mysql and jwt secret configuration
 
-### Paso 4: Crear la base de datos
+### Step 4: Create the database
 
-- Si no tiene instalado XAMPP, por favor dirigirse a [este link](https://www.apachefriends.org/es/index.html)
-- Abrir XAMPP Panel Control, iniciar los servicios de Apache y MySQL y corroborar que el puerto sobre el cual se está ejecutando la base de datos es `3306`
-- Si no encuentra XAMPP Panel de Control, por terminal ejecutar:
+- If you do not have XAMPP installed, please go to [this link](https://www.apachefriends.org/es/index.html)
+- Open XAMPP Panel Control, start the Apache and MySQL services and check that the port on which the database is running is `3306`
+- If you cannot find XAMPP Control Panel, by terminal execute:
   `sudo /opt/lampp/lampp start`
-- Ingresar desde el navegador a la ruta `http://localhost/phpmyadmin/index.php`
-- Abrir el archivo `database.sql` ubicado dentro de la carpeta `data_base` del proyecto clonado
-- Crear la base de datos, se puede importar el archivo o se puede copiar su contenido y pegar en la solapa de SQL
-- Puede ejecutar npm run database para crear toda la base de datos desde la consola y esperar unos segundos mientras se configura todo
+- Enter the route from the browser `http://localhost/phpmyadmin/index.php`
+- Open file `database.sql` located inside the folder `store` from the cloned project
+- the file can be imported or its content can be copied and pasted into the SQL tab
+- You can run `npm run database` from the project root to create the whole database from the console and wait a few seconds while everything is configured
+- You can use HeidiSql, MySqlWorbench, DBeaver for database administration.
 
-### Paso 5: Iniciar el servidor
+### Step 5: Start the server
 
-- Desde la terminal ubicandose en la raiz del proyecto, ejecutar:
+- From the terminal located at the root of the project, execute:
 
 `npm run start`
 
-### Paso 6: Hacer consultas a la API
+### Step 6: Query the API
 
-- Si no tiene instalado Postman, por favor dirigirse a [este link](https://www.postman.com/downloads/)
-- Abrir Postman, click en `File`, click en `Import`, click en `Import From Link` y pegar lo siguiente `https://www.getpostman.com/collections/9a92f21a4b944b211278`
-- Hacer las consultas deseadas
+- If you do not have Postman installed, please go to [this link](https://www.postman.com/downloads/)
+- Open Postman, click on `File`, click on `Import`, click on `Import From Link` and paste the following `https://www.getpostman.com/collections/9a92f21a4b944b211278`
+- Make the desired queries
+- Default user: user: admin, password: admin123
 
-## Documentación de la API
+## API documentation
 
-- Para ver la documentación de la API, puede abrir el archivo `swagger.json` ubicado en el directorio raiz del proyecto o puede poner en su navegador [este link](http://localhost:3000/api-docs) despues de iniciar el servidor o [estelink](https://app.swaggerhub.com/apis/migue1223/delilah-resto/1.0.0)
+- To view the API documentation, you can open the file `swagger.json` located in the root directory of the project or you can put in your browser [this link](http://localhost:3000/api-docs) after starting the server or [this link](https://app.swaggerhub.com/apis/migue1223/delilah-resto/1.0.0)

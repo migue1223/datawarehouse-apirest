@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Delilah_resto",
-    "description": "Food Restaurant API",
+    "title": "Data Warehouse",
+    "description": "Contacts Manager API",
     "contact": { "email": "jta1223@gmail.com" },
     "version": "1.0.0"
   },
@@ -14,12 +14,32 @@
       "description": "Operations on the user"
     },
     {
-      "name": "Product",
-      "description": "Operations on the product"
+      "name": "Region",
+      "description": "Operations on the region"
     },
     {
-      "name": "Order",
-      "description": "Operations on the order"
+      "name": "Channel",
+      "description": "Operations on the channel"
+    },
+    {
+      "name": "Preference",
+      "description": "Operations on the preference"
+    },
+    {
+      "name": "Contact",
+      "description": "Operations on the contact"
+    },
+    {
+      "name": "Country",
+      "description": "Operations on the country"
+    },
+    {
+      "name": "City",
+      "description": "Operations on the channel"
+    },
+    {
+      "name": "Company",
+      "description": "Operations on the company"
     }
   ],
   "schemes": ["http"],
@@ -330,27 +350,27 @@
         }
       }
     },
-    "/products": {
+    "/regions": {
       "post": {
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "tags": ["Product"],
-        "summary": "Created new product",
-        "description": "Created new product in our app",
-        "operationId": "addProduct",
+        "tags": ["Region"],
+        "summary": "Created new region",
+        "description": "Created new region in our app",
+        "operationId": "addRegion",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "Created new product",
+            "description": "Created new region",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/addProduct"
+              "$ref": "#/definitions/addRegion"
             }
           }
         ],
@@ -358,7 +378,7 @@
           "201": {
             "description": "Succesfull operation",
             "schema": {
-              "$ref": "#/definitions/listProduct"
+              "$ref": "#/definitions/listRegion"
             }
           },
           "401": {
@@ -375,17 +395,17 @@
             "bearerAuth": []
           }
         ],
-        "tags": ["Product"],
-        "summary": "List products",
-        "description": "List products in our app",
-        "operationId": "listProducts",
+        "tags": ["Region"],
+        "summary": "List regions",
+        "description": "List regions in our app",
+        "operationId": "listRegions",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "Succesfull operation",
             "schema": {
-              "$ref": "#/definitions/listProduct"
+              "$ref": "#/definitions/listRegion"
             }
           },
           "401": {
@@ -397,17 +417,17 @@
         }
       }
     },
-    "/products/{id}": {
+    "/regions/{id}": {
       "get": {
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "tags": ["Product"],
-        "summary": "List product",
-        "description": "List product in our app",
-        "operationId": "listProduct",
+        "tags": ["Region"],
+        "summary": "List region",
+        "description": "List region in our app",
+        "operationId": "listRegion",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -415,7 +435,7 @@
             "in": "path",
             "type": "integer",
             "name": "id",
-            "description": "List product",
+            "description": "List region",
             "required": true
           }
         ],
@@ -423,7 +443,7 @@
           "200": {
             "description": "Succesfull operation",
             "schema": {
-              "$ref": "#/definitions/listProduct"
+              "$ref": "#/definitions/listRegion"
             }
           },
           "401": {
@@ -443,10 +463,10 @@
             "bearerAuth": []
           }
         ],
-        "tags": ["Product"],
-        "summary": "Updated product",
-        "description": "Updated product in our app",
-        "operationId": "updatedProduct",
+        "tags": ["Region"],
+        "summary": "Updated region",
+        "description": "Updated region in our app",
+        "operationId": "updatedRegion",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -454,16 +474,16 @@
             "in": "path",
             "type": "integer",
             "name": "id",
-            "description": "Updated product",
+            "description": "Region product",
             "required": true
           },
           {
             "in": "body",
             "name": "body",
-            "description": "Updated product",
+            "description": "Updated region",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/addProduct"
+              "$ref": "#/definitions/addRegion"
             }
           }
         ],
@@ -471,7 +491,7 @@
           "200": {
             "description": "Succesfull operation",
             "schema": {
-              "$ref": "#/definitions/listProduct"
+              "$ref": "#/definitions/listRegion"
             }
           },
           "401": {
@@ -491,10 +511,10 @@
             "bearerAuth": []
           }
         ],
-        "tags": ["Product"],
-        "summary": "Deleted product",
-        "description": "Deleted product in our app",
-        "operationId": "deletedProduct",
+        "tags": ["Region"],
+        "summary": "Deleted region",
+        "description": "Deleted region in our app",
+        "operationId": "deletedRegion",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -502,7 +522,7 @@
             "in": "path",
             "type": "integer",
             "name": "id",
-            "description": "Deleted product",
+            "description": "Deleted region",
             "required": true
           }
         ],
@@ -522,27 +542,27 @@
         }
       }
     },
-    "/orders": {
+    "/channels": {
       "post": {
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "tags": ["Order"],
-        "summary": "Created new order",
-        "description": "Created new order in our app",
-        "operationId": "addOrder",
+        "tags": ["Channel"],
+        "summary": "Created new channel",
+        "description": "Created new channel in our app",
+        "operationId": "addChannel",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
             "name": "body",
-            "description": "Created new order, pay_id: 1: EFECTIVO, 2: T DEBITO, 3: T CREDITO",
+            "description": "Created new channel",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/addOrder"
+              "$ref": "#/definitions/addChannel"
             }
           }
         ],
@@ -550,7 +570,7 @@
           "201": {
             "description": "Succesfull operation",
             "schema": {
-              "$ref": "#/definitions/listOrder"
+              "$ref": "#/definitions/listChannel"
             }
           },
           "401": {
@@ -567,17 +587,17 @@
             "bearerAuth": []
           }
         ],
-        "tags": ["Order"],
-        "summary": "List orders",
-        "description": "List orders in our app",
-        "operationId": "listOrders",
+        "tags": ["Channel"],
+        "summary": "List channels",
+        "description": "List channels in our app",
+        "operationId": "listChannels",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "Succesfull operation",
             "schema": {
-              "$ref": "#/definitions/listOrder"
+              "$ref": "#/definitions/listChannel"
             }
           },
           "401": {
@@ -589,17 +609,17 @@
         }
       }
     },
-    "/orders/{id}": {
+    "/channels/{id}": {
       "get": {
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "tags": ["Order"],
-        "summary": "List order",
-        "description": "List order in our app",
-        "operationId": "listOrder",
+        "tags": ["Channel"],
+        "summary": "List channel",
+        "description": "List channel in our app",
+        "operationId": "listChannel",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -607,7 +627,7 @@
             "in": "path",
             "type": "integer",
             "name": "id",
-            "description": "Id",
+            "description": "List channel",
             "required": true
           }
         ],
@@ -615,7 +635,55 @@
           "200": {
             "description": "Succesfull operation",
             "schema": {
-              "$ref": "#/definitions/listOrder"
+              "$ref": "#/definitions/listChannel"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Channel"],
+        "summary": "Updated channel",
+        "description": "Updated channel in our app",
+        "operationId": "updatedChannel",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Channel",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated channel",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addChannel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listChannel"
             }
           },
           "401": {
@@ -635,10 +703,10 @@
             "bearerAuth": []
           }
         ],
-        "tags": ["Order"],
-        "summary": "Deleted order",
-        "description": "Deleted order in our app",
-        "operationId": "deletedOrder",
+        "tags": ["Channel"],
+        "summary": "Deleted channel",
+        "description": "Deleted channel in our app",
+        "operationId": "deletedChannel",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -646,7 +714,7 @@
             "in": "path",
             "type": "integer",
             "name": "id",
-            "description": "Id",
+            "description": "Deleted channel",
             "required": true
           }
         ],
@@ -666,17 +734,84 @@
         }
       }
     },
-    "/orders/{id}?status=0": {
-      "put": {
+    "/preferences": {
+      "post": {
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "tags": ["Order"],
-        "summary": "Updated status order",
-        "description": "Updated status order in our app",
-        "operationId": "updatedOrders",
+        "tags": ["Preference"],
+        "summary": "Created new preference",
+        "description": "Created new preference in our app",
+        "operationId": "addPreference",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created new preference",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addPreference"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listPreference"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Preference"],
+        "summary": "List preferences",
+        "description": "List preferences in our app",
+        "operationId": "listPreferences",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listPreference"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/preferences/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Preference"],
+        "summary": "List preference",
+        "description": "List preference in our app",
+        "operationId": "listPreference",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
@@ -684,14 +819,7 @@
             "in": "path",
             "type": "integer",
             "name": "id",
-            "description": "Id",
-            "required": true
-          },
-          {
-            "in": "path",
-            "type": "integer",
-            "name": "Status order",
-            "description": "Status 1: NUEVO, 2: CONFIRMADO, 3: PREPARANDO, 4: ENVIANDO, 5: ENTREGADO, 6: CANCELADO",
+            "description": "List preference",
             "required": true
           }
         ],
@@ -699,8 +827,860 @@
           "200": {
             "description": "Succesfull operation",
             "schema": {
-              "$ref": "#/definitions/listOrder"
+              "$ref": "#/definitions/listPreference"
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Preference"],
+        "summary": "Updated preference",
+        "description": "Updated preference in our app",
+        "operationId": "updatedPreference",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Preference",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated preference",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addPreference"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listPreference"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Preference"],
+        "summary": "Deleted preference",
+        "description": "Deleted preference in our app",
+        "operationId": "deletedPreference",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Deleted preference",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/contacts": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Contact"],
+        "summary": "Created new contact",
+        "description": "Created new contact in our app",
+        "operationId": "addContact",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created new contact",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addContact"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listContact"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Contact"],
+        "summary": "List contacts",
+        "description": "List contacts in our app",
+        "operationId": "listContacts",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listContact"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/contacts/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Contact"],
+        "summary": "List contact",
+        "description": "List contact in our app",
+        "operationId": "listContact",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "List contact",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listContact"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Contact"],
+        "summary": "Updated contact",
+        "description": "Updated contact in our app",
+        "operationId": "updatedContact",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Contact",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated contact",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addContact"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listContact"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Contact"],
+        "summary": "Deleted contact",
+        "description": "Deleted contact in our app",
+        "operationId": "deletedContact",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Deleted contact",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/countries": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Country"],
+        "summary": "Created new country",
+        "description": "Created new country in our app",
+        "operationId": "addCountry",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created new country",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addCountry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCountry"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Country"],
+        "summary": "List Countrys",
+        "description": "List countrys in our app",
+        "operationId": "listCountrys",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCountry"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/countries/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Country"],
+        "summary": "List country",
+        "description": "List country in our app",
+        "operationId": "listCountry",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "List country",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCountry"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Country"],
+        "summary": "Updated country",
+        "description": "Updated country in our app",
+        "operationId": "updatedCountry",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Country",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated country",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addCountry"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCountry"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Country"],
+        "summary": "Deleted country",
+        "description": "Deleted country in our app",
+        "operationId": "deletedCountry",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Deleted country",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/cities": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["City"],
+        "summary": "Created new city",
+        "description": "Created new city in our app",
+        "operationId": "addCity",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created new city",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addCity"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCity"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["City"],
+        "summary": "List citys",
+        "description": "List citys in our app",
+        "operationId": "listCitys",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCity"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/cities/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["City"],
+        "summary": "List city",
+        "description": "List city in our app",
+        "operationId": "listCity",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "List city",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCity"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["City"],
+        "summary": "Updated city",
+        "description": "Updated city in our app",
+        "operationId": "updatedCity",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "City",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated city",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addCity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCity"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["City"],
+        "summary": "Deleted city",
+        "description": "Deleted city in our app",
+        "operationId": "deletedCity",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Deleted city",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/companies": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "Created new company",
+        "description": "Created new company in our app",
+        "operationId": "addCompany",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created new company",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addCompany"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCompany"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "List companys",
+        "description": "List companys in our app",
+        "operationId": "listCompanys",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCompany"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/companies/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "List company",
+        "description": "List company in our app",
+        "operationId": "listCompany",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "List company",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCompany"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "Updated company",
+        "description": "Updated company in our app",
+        "operationId": "updatedCompany",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Company",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated company",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addCompany"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation",
+            "schema": {
+              "$ref": "#/definitions/listCompany"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "Deleted company",
+        "description": "Deleted company in our app",
+        "operationId": "deletedCompany",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "type": "integer",
+            "name": "id",
+            "description": "Deleted company",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesfull operation"
           },
           "401": {
             "description": "Unauthorized"
@@ -805,7 +1785,7 @@
       "properties": {
         "username": {
           "type": "string",
-          "example": "jta1223 y/o jta1223@gmail.com"
+          "example": "jta1223@gmail.com"
         },
         "password": {
           "type": "string",
@@ -817,8 +1797,37 @@
       "type": "object",
       "properties": {
         "data": {
-          "type": "string",
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVsbG5hbWUiOiJKb25hdGhhbiBKaW1lbmV6IFMiLCJlbWFpbCI6Imp0YTEyMjNAZ21haWwuY29tIiwicGhvbmUiOiIzMTY4ODUwNDk3IiwiYWRkcmVzcyI6IkNsbCA4MCBTIDYwIDU0IiwiaXNBZG1pbiI6MSwiYWN0aXZlIjoxLCJpYXQiOjE2MDcxMzQyOTl9.4tJARNhqGCiMZ6iGh_lob2r39WKyCv0cnKQGjnA_r5c"
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVsbG5hbWUiOiJKb25hdGhhbiBKaW1lbmV6IFMiLCJlbWFpbCI6Imp0YTEyMjNAZ21haWwuY29tIiwicGhvbmUiOiIzMTY4ODUwNDk3IiwiYWRkcmVzcyI6IkNsbCA4MCBTIDYwIDU0IiwiaXNBZG1pbiI6MSwiYWN0aXZlIjoxLCJpYXQiOjE2MDcxMzQyOTl9.4tJARNhqGCiMZ6iGh_lob2r39WKyCv0cnKQGjnA_r5c"
+            },
+            "user": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type":"integer",
+                  "format":"int32",
+                  "example": 1
+                },
+                "email": {
+                  "type": "string",
+                  "example": "admin@admin.com"
+                },
+                "idAdmin": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 1
+                },
+                "active": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 1
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -871,25 +1880,16 @@
         }
       }
     },
-    "addProduct": {
+    "addRegion": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string",
-          "example": "Sandwich de Focaccia"
-        },
-        "img": {
-          "type": "string",
-          "example": "https://www.petitchef.es/imgupl/recipe/focaccia-sandwich--md-166713p249402.jpg"
-        },
-        "price": {
-          "type": "integer",
-          "format": "int32",
-          "example": 100
+          "example": "Suramérica"
         }
       }
     },
-    "listProduct": {
+    "listRegion": {
       "type": "array",
       "items": {
         "type": "object",
@@ -901,21 +1901,7 @@
           },
           "name": {
             "type": "string",
-            "example": "Bagel de salmón"
-          },
-          "img": {
-            "type": "string",
-            "example": "https://www.petitchef.es/imgupl/recipe/focaccia-sandwich--md-166713p249402.jpg"
-          },
-          "price": {
-            "type": "integer",
-            "format": "int32",
-            "example": 100
-          },
-          "enable": {
-            "type": "integer",
-            "format": "int32",
-            "example": 1
+            "example": "Suramérica"
           },
           "createdAt": {
             "type": "string",
@@ -924,34 +1910,16 @@
         }
       }
     },
-    "addOrder": {
+    "addChannel": {
       "type": "object",
       "properties": {
-        "product": {
-          "type": "array",
-          "items": {
-            "properties": {
-              "id": {
-                "type": "integer",
-                "format": "int32",
-                "example": 1
-              },
-              "quantity": {
-                "type": "integer",
-                "format": "int32",
-                "example": 1
-              }
-            }
-          }
-        },
-        "pay_id": {
-          "type": "integer",
-          "format": "int32",
-          "example": 1
+        "name": {
+          "type": "string",
+          "example": "Teléfono"
         }
       }
     },
-    "listOrder": {
+    "listChannel": {
       "type": "array",
       "items": {
         "type": "object",
@@ -961,78 +1929,331 @@
             "format": "int32",
             "example": 1
           },
-          "created": {
+          "name": {
             "type": "string",
-            "example": "2020-12-05T21:19:38.000Z"
+            "example": "Teléfono"
           },
-          "User": {
+          "createdAt": {
+            "type": "string",
+            "example": "2020-12-04T19:37:58.000Z"
+          }
+        }
+      }
+    },
+    "addPreference": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Sin preferencia"
+        }
+      }
+    },
+    "listPreference": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Sin preferencia"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2020-12-04T19:37:58.000Z"
+          }
+        }
+      }
+    },
+    "addContact": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jonathan"
+        },
+        "lastname": {
+          "type": "string",
+          "example": "Jiménez"
+        },
+        "position": {
+          "type": "string",
+          "example": "Developer"
+        },
+        "email": {
+          "type": "string",
+          "example": "jta1223@gmail.com"
+        },
+        "companyId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "regionId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "countryId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "cityId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "address": {
+          "type": "string",
+          "example": "Cll 10 52A 18"
+        },
+        "interests": {
+          "type": "string",
+          "example": "25%"
+        },
+        "channelId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "useraccount": {
+          "type": "string",
+          "example": "jta1223@gmail.com"
+        },
+        "preferencesId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
+      }
+    },
+    "listContact": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Jonathan"
+          },
+          "lastname": {
+            "type": "string",
+            "example": "Jiménez"
+          },
+          "email": {
+            "type": "string",
+            "example": "jta1223@gmail.com"
+          },
+          "position": {
+            "type": "string",
+            "example": "Developer"
+          },
+          "address": {
+            "type": "string",
+            "example": "Cl 10 52A 18"
+          },
+          "interests": {
+            "type": "string",
+            "example": "25%"
+          },
+          "useraccount": {
+            "type": "string",
+            "example": "jta1223@gmail.com"
+          },
+          "Channel": {
             "type": "object",
             "properties": {
-              "fullname": {
-                "type": "string",
-                "example": "Jonathan Jimenez S"
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
               },
-              "username": {
-                "type": "string",
-                "example": "jta1223"
-              },
-              "email": {
-                "type": "string",
-                "example": "jta1223@gmail.com"
-              },
-              "phone": {
-                "type": "string",
-                "example": "1234567890"
-              },
-              "address": {
-                "type": "string",
-                "example": "Cl 10 50 90"
-              }
-            }
-          },
-          "Status": {
-            "type": "object",
-            "properties": {
               "name": {
                 "type": "string",
-                "example": "NUEVO"
+                "example": "Teléfono"
               }
             }
           },
-          "Payment": {
+          "Preference": {
             "type": "object",
             "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
               "name": {
                 "type": "string",
-                "example": "EFECTIVO"
+                "example": "Sin preferencia"
               }
             }
           },
-          "Order_Products": {
-            "type": "array",
-            "items": {
-              "properties": {
-                "quantity": {
-                  "type": "integer",
-                  "format": "int32",
-                  "example": 1
-                },
-                "price": {
-                  "type": "integer",
-                  "format": "int32",
-                  "example": 1
-                },
-                "Product": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "example": "Sandwich de Focaccia"
-                    },
-                    "img": {
-                      "type": "string",
-                      "example": "https://www.petitchef.es/imgupl/recipe/focaccia-sandwich--md-166713p249402.jpg"
-                    }
+          "City": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Medellín"
+              }
+            }
+          },
+          "Country": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Colombia"
+              }
+            }
+          },
+          "Region": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Suramérica"
+              }
+            }
+          },
+          "Company": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Exxe Logistica SAS"
+              }
+            }
+          }
+        }
+      }
+    },
+    "addCountry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Colombia"
+        },
+        "regionId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
+      }
+    },
+    "listCountry": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Colombia"
+          },
+          "Region": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Suramérica"
+              }
+            }
+          }
+        }
+      }
+    },
+    "addCity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Medellín"
+        },
+        "countryId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
+      }
+    },
+    "listCity": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Medellín"
+          },
+          "Country": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Colombia"
+              },
+              "Region": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Suramérica"
                   }
                 }
               }
@@ -1041,13 +2262,102 @@
         }
       }
     },
-    "updatedOrder": {
+    "addCompany": {
       "type": "object",
       "properties": {
-        "status": {
+        "name": {
+          "type": "string",
+          "example": "Exxe Logistica SAS"
+        },
+        "email": {
+          "type": "string",
+          "example": "exxe@exxe.com"
+        },
+        "address": {
+          "type": "string",
+          "example": "Cl 10 53A 25"
+        },
+        "regionId": {
           "type": "integer",
           "format": "int32",
           "example": 1
+        },
+        "countryId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        },
+        "cityId": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1
+        }
+      }
+    },
+    "listCompany": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Exxe Logistica SAS"
+          },
+          "email": {
+            "type": "string",
+            "example": "exxe@exxe.com"
+          },
+          "address": {
+            "type": "string",
+            "example": "Cl 10 53A 25"
+          },
+          "City": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "type": "string",
+                "example": "Medellín"
+              },
+              "Country": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Colombia"
+                  },
+                  "Region": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Suramérica"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
