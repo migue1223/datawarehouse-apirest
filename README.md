@@ -66,4 +66,4 @@ FrontEnd and Backend Project of the Full Stack Web Development course by Acámic
 
 ## API documentation
 
-- To view the API documentation, you can open the file `swagger.json` located in the root directory `backend` of the project or you can put in your browser [this link](http://localhost:3000/api-docs)
+- To view the API documentation, you can open the file `swagger.json` located in the root directory `backend` of the project or you can put in your browser [this link](http://localhost:3000/api-docs), Please validate the port the backend is running on.
