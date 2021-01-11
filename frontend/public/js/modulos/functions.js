@@ -92,10 +92,11 @@ const functions = {
 };
 
 const url = window.location.href.split('#');
+const userAdmin = JSON.parse(sessionStorage.getItem('user'));
 
 if (url) {
   window.onload = async () => {
-    if (url[1] === 'usuarios') {
+    if (url[1] === 'usuarios' && +userAdmin.isAdmin === 1) {
       await renderTableUsers();
     }
     if (url[1] === 'contactos') {
